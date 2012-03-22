@@ -82,9 +82,7 @@
 		0691C8F0151AEE7F00450DEB /* ImageFilter */ = {
 			isa = PBXGroup;
 			children = (
-				0691C8FC151AEE7F00450DEB /* AppDelegate.h */,
-				0691C8FD151AEE7F00450DEB /* AppDelegate.m */,
-				0691C8FF151AEE7F00450DEB /* MainMenu.xib */,
+				06DC28EF151B0413006B8C8E /* UI */,
 				0691C8F1151AEE7F00450DEB /* Supporting Files */,
 			);
 			path = ImageFilter;
@@ -100,6 +98,16 @@
 				0691C8F9151AEE7F00450DEB /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		06DC28EF151B0413006B8C8E /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				0691C8FC151AEE7F00450DEB /* AppDelegate.h */,
+				0691C8FD151AEE7F00450DEB /* AppDelegate.m */,
+				0691C8FF151AEE7F00450DEB /* MainMenu.xib */,
+			);
+			name = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -288,6 +296,7 @@
 				0691C906151AEE7F00450DEB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
