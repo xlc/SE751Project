@@ -7,15 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0615161B151B116300E585C8 /* GCDTaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0615161A151B116300E585C8 /* GCDTaskQueue.cpp */; };
 		0691C8EB151AEE7F00450DEB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0691C8EA151AEE7F00450DEB /* Cocoa.framework */; };
 		0691C8F5151AEE7F00450DEB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0691C8F3151AEE7F00450DEB /* InfoPlist.strings */; };
 		0691C8F7151AEE7F00450DEB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0691C8F6151AEE7F00450DEB /* main.m */; };
 		0691C8FB151AEE7F00450DEB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 0691C8F9151AEE7F00450DEB /* Credits.rtf */; };
 		0691C8FE151AEE7F00450DEB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0691C8FD151AEE7F00450DEB /* AppDelegate.m */; };
 		0691C901151AEE7F00450DEB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0691C8FF151AEE7F00450DEB /* MainMenu.xib */; };
+		06B7B878151B151B00470B72 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06B7B877151B151B00470B72 /* Image.cpp */; };
+		06B7B87C151B1FF800470B72 /* SequentialTaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06B7B87B151B1FF800470B72 /* SequentialTaskQueue.cpp */; };
+		06DC28F8151B05CD006B8C8E /* Task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06DC28F7151B05CD006B8C8E /* Task.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		06151618151B115700E585C8 /* GCDTaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDTaskQueue.h; sourceTree = "<group>"; };
+		0615161A151B116300E585C8 /* GCDTaskQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GCDTaskQueue.cpp; sourceTree = "<group>"; };
+		0615161C151B11A100E585C8 /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
+		0615161D151B121C00E585C8 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
 		0691C8E6151AEE7F00450DEB /* ImageFilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0691C8EA151AEE7F00450DEB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		0691C8ED151AEE7F00450DEB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -29,6 +37,12 @@
 		0691C8FC151AEE7F00450DEB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0691C8FD151AEE7F00450DEB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		0691C900151AEE7F00450DEB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		06B7B877151B151B00470B72 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Image.cpp; sourceTree = "<group>"; };
+		06B7B87A151B1FE900470B72 /* SequentialTaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequentialTaskQueue.h; sourceTree = "<group>"; };
+		06B7B87B151B1FF800470B72 /* SequentialTaskQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SequentialTaskQueue.cpp; sourceTree = "<group>"; };
+		06DC28F5151B048D006B8C8E /* TaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskQueue.h; sourceTree = "<group>"; };
+		06DC28F6151B04CF006B8C8E /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
+		06DC28F7151B05CD006B8C8E /* Task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Task.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +96,8 @@
 		0691C8F0151AEE7F00450DEB /* ImageFilter */ = {
 			isa = PBXGroup;
 			children = (
+				06DC28F2151B0458006B8C8E /* TaskQueue */,
+				06DC28F1151B0448006B8C8E /* Filters */,
 				06DC28EF151B0413006B8C8E /* UI */,
 				0691C8F1151AEE7F00450DEB /* Supporting Files */,
 			);
@@ -108,6 +124,30 @@
 				0691C8FF151AEE7F00450DEB /* MainMenu.xib */,
 			);
 			name = UI;
+			sourceTree = "<group>";
+		};
+		06DC28F1151B0448006B8C8E /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				0615161C151B11A100E585C8 /* Filter.h */,
+				0615161D151B121C00E585C8 /* Image.h */,
+				06B7B877151B151B00470B72 /* Image.cpp */,
+			);
+			name = Filters;
+			sourceTree = "<group>";
+		};
+		06DC28F2151B0458006B8C8E /* TaskQueue */ = {
+			isa = PBXGroup;
+			children = (
+				06DC28F5151B048D006B8C8E /* TaskQueue.h */,
+				06DC28F6151B04CF006B8C8E /* Task.h */,
+				06DC28F7151B05CD006B8C8E /* Task.cpp */,
+				06B7B87A151B1FE900470B72 /* SequentialTaskQueue.h */,
+				06B7B87B151B1FF800470B72 /* SequentialTaskQueue.cpp */,
+				06151618151B115700E585C8 /* GCDTaskQueue.h */,
+				0615161A151B116300E585C8 /* GCDTaskQueue.cpp */,
+			);
+			name = TaskQueue;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,6 +215,10 @@
 			files = (
 				0691C8F7151AEE7F00450DEB /* main.m in Sources */,
 				0691C8FE151AEE7F00450DEB /* AppDelegate.m in Sources */,
+				06DC28F8151B05CD006B8C8E /* Task.cpp in Sources */,
+				0615161B151B116300E585C8 /* GCDTaskQueue.cpp in Sources */,
+				06B7B878151B151B00470B72 /* Image.cpp in Sources */,
+				06B7B87C151B1FF800470B72 /* SequentialTaskQueue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +302,8 @@
 		0691C905151AEE7F00450DEB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageFilter/ImageFilter-Prefix.pch";
 				INFOPLIST_FILE = "ImageFilter/ImageFilter-Info.plist";
@@ -269,6 +315,8 @@
 		0691C906151AEE7F00450DEB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageFilter/ImageFilter-Prefix.pch";
 				INFOPLIST_FILE = "ImageFilter/ImageFilter-Info.plist";
