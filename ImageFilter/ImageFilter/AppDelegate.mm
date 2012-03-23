@@ -93,6 +93,9 @@ static SequentialTaskQueue * seqTaskQueue;
 }
 
 - (IBAction)gcdGrayscaleApply:(id)sender {
+    if (!_imgView.image)
+        return;
+    
     CGImageRef cgImg = [_imgView.image CGImageForProposedRect:NULL context:NULL hints:NULL];
     self.img = new Image(cgImg);
     self.filter = new GrayscaleFilter(self.img, seqTaskQueue, ^(Filter *filter) {
@@ -101,10 +104,12 @@ static SequentialTaskQueue * seqTaskQueue;
         CGImageRef cgImg = CGBitmapContextCreateImage(context);
         _imgView.image = [[NSImage alloc] initWithCGImage:cgImg size:NSMakeSize(img->getWidth(), img->getHeight())];
     });
+    self.filter->apply();
 }
 
 - (IBAction)tpGrayscaleApply:(id)sender {
-    
+    if (!_imgView.image)
+        return;
 }
 
 #pragma mark -

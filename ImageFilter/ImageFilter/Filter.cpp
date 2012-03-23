@@ -9,6 +9,7 @@
 #include "Filter.h"
 
 #include <pthread.h>
+#include <iostream>
 
 #include "TaskQueue.h"
 #include "Task.h"
@@ -23,7 +24,7 @@ class FilterTask : public Task {
     
 public:
     FilterTask(Filter *filter, const Image *source, Image *target, size_t x, size_t y)
-    : _filter(filter), _source(source), _target(target), _x(x), _y(y)
+    : Task(), _filter(filter), _source(source), _target(target), _x(x), _y(y)
     {}
     
     virtual void main() {
@@ -35,9 +36,8 @@ public:
 #pragma mark -
 
 Filter::Filter(Image *source, TaskQueue *queue, FilterCompletionHandler handler)
-: _source(source), _taskQueue(queue) {
+: _taskQueue(queue), _source(source), _result(NULL), _tasks(NULL), _w(0), _h(0) {
     _handler = Block_copy(handler);
-    apply();
 }
 
 Filter::~Filter() {

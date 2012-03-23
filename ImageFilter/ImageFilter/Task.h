@@ -12,6 +12,7 @@
 #include <mutex>
 #include <condition_variable>
 
+class TaskQueue;
 class Task;
 
 typedef void(^TaskCompletionHandler)(Task *task);
@@ -26,7 +27,12 @@ private:
 protected:
     std::mutex _mutex;
     
-    Task(): _completed(false) {}
+    Task()
+    : _completed(false), _executing(false), _completionHandler(NULL), _executingCV() {}
+    
+    void setExecuting(bool b) { std::lock_guard<std::mutex> lk(_mutex); _executing = b; }
+    
+    friend TaskQueue;
     
 public:
     // start this task, should only be called from TaskQueue
@@ -36,8 +42,14 @@ public:
     virtual void main() = 0;
     
     // getter
-    bool isExecuting() { std::lock_guard<std::mutex> lk(_mutex); return _executing; }
-    bool isCompleted() { std::lock_guard<std::mutex> lk(_mutex); return _completed; }
+    bool isExecuting() {
+        std::lock_guard<std::mutex> lk(_mutex);
+        return _executing;
+    }
+    bool isCompleted() {
+        std::lock_guard<std::mutex> lk(_mutex);
+        return _completed;
+    }
     
     // wait until this task completed
     void join();

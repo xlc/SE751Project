@@ -29,9 +29,6 @@ protected:
     size_t _h;
     FilterCompletionHandler _handler;
     
-    // apply filter to source image
-    virtual void apply();
-    
     // called for each pixel
     virtual void applyFilter(const Image *source, Image *target, size_t x, size_t y) = 0;
     
@@ -40,6 +37,9 @@ protected:
 public:
     Filter(Image *source, TaskQueue *queue, FilterCompletionHandler handler);
     ~Filter();
+    
+    // apply filter to source image
+    virtual void apply();
     
     // getter
     

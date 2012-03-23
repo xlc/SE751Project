@@ -9,6 +9,7 @@
 #include "SequentialTaskQueue.h"
 
 #include <thread>
+#include <iostream>
 
 SequentialTaskQueue::SequentialTaskQueue() {
     new std::thread(worker_thread, this);
@@ -20,9 +21,11 @@ SequentialTaskQueue::~SequentialTaskQueue() {
 }
 
 void SequentialTaskQueue::addTask(Task *task, bool freeWhenDone) {
-    std::lock_guard<std::mutex> lk(_mutex);
-    _tasks.push_back(std::pair<Task *, bool>(task, freeWhenDone));
-    _action = NewTask;
+    {
+        std::lock_guard<std::mutex> lk(_mutex);
+        _tasks.push_back(std::pair<Task *, bool>(task, freeWhenDone));
+        _action = NewTask;
+    }
     _cv.notify_one();
 }
 
@@ -31,7 +34,7 @@ void SequentialTaskQueue::removeTask(Task *task) {
         return; // should not remove executing task
     std::lock_guard<std::mutex> lk(_mutex);
     std::list<std::pair<Task *, bool>>::iterator it;
-    for (it == _tasks.begin(); it != _tasks.end(); it++) {
+    for (it = _tasks.begin(); it != _tasks.end(); it++) {
         if (it->first == task) {
             _tasks.erase(it);
             break;
@@ -60,7 +63,6 @@ unsigned int SequentialTaskQueue::getTaskCount() {
 }
 
 void worker_thread(SequentialTaskQueue *queue) {
-    std::unique_lock<std::mutex> lk(queue->_mutex);
     Task *task = NULL;
     for (;;) {  // run loop
         if (task == NULL) { // if did not get a task last time
@@ -75,21 +77,20 @@ void worker_thread(SequentialTaskQueue *queue) {
                 
             case SequentialTaskQueue::NewTask:
             {
+                task = NULL;
                 bool shouldFree;
                 {
                     std::lock_guard<std::mutex> lk(queue->_mutex);
                     std::list<std::pair<Task *, bool>>::iterator it;
-                    for (it == queue->_tasks.begin(); it != queue->_tasks.end(); it++) {
-                        if (!it->first->isExecuting()) {
-                            task = it->first;
-                            shouldFree = it->second;
-                            break;
-                        }
+                    if (queue->_tasks.size() != 0) {
+                        it = queue->_tasks.begin();
+                        task = it->first;
+                        shouldFree = it->second;
+                        queue->_tasks.erase(it);
                     }
                 }   // release lock
                 if (task) {
                     task->start();
-                    queue->removeTask(task);
                     if (shouldFree)
                         delete task;
                 }

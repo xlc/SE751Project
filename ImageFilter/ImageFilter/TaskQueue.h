@@ -32,7 +32,7 @@ public:
     // remove all not started taskes
     virtual void removeAllRemainTasks() = 0;
     
-    // get a list of all unfinished tasks, includes task not started or executing
+    // get a list of all task that not executed yet
     virtual std::vector<Task *> getTasks() = 0;
     // get count of all unfinished tasks
     virtual unsigned int getTaskCount() = 0;

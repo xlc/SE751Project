@@ -12,7 +12,7 @@
 #include <ApplicationServices/ApplicationServices.h>
 
 typedef struct {
-    unsigned char r, g, b;
+    unsigned char r, g, b, a;
 } Pixel;
 
 class Image {
@@ -42,20 +42,22 @@ public:
     unsigned char const *getData() const { return _data; }
     CGContextRef getContext() { return _context; }
     Pixel getPixel(size_t x, size_t y) const {
-        size_t idx = (y * _width + x) * 3;
+        size_t idx = (y * _width + x) * 4;
         Pixel p;
         p.r = _data[idx];
         p.g = _data[idx+1];
         p.b = _data[idx+2];
+        p.a = _data[idx+3];
         return p;
     }
     
     // setter
     void setPixel(Pixel p, size_t x, size_t y) {
-        size_t idx = (y * _width + x) * 3;
+        size_t idx = (y * _width + x) * 4;
         _data[idx] = p.r;
         _data[idx+1] = p.g;
         _data[idx+2] = p.b;
+        _data[idx+3] = p.a;
     }
 };
 

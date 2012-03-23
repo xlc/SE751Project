@@ -32,7 +32,7 @@ void Image::init(size_t width, size_t height, void *bitmapData) {
     size_t             bitmapByteCount;
     size_t             bitmapBytesPerRow;
     
-    bitmapBytesPerRow   = (_width * 3);
+    bitmapBytesPerRow   = (_width * 4);
     bitmapByteCount     = (bitmapBytesPerRow * _height);
     
     // Use the generic RGB color space.
@@ -49,7 +49,7 @@ void Image::init(size_t width, size_t height, void *bitmapData) {
                                       8,      // bits per component
                                       bitmapBytesPerRow,
                                       colorSpace,
-                                      kCGImageAlphaNone);
+                                      kCGImageAlphaPremultipliedLast);
     assert(_context);
     
     CGColorSpaceRelease( colorSpace );
