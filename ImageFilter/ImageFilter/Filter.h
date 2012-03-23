@@ -38,12 +38,7 @@ protected:
     friend FilterTask;
     
 public:
-    Filter(Image *source, TaskQueue *queue, FilterCompletionHandler handler)
-    : _source(source), _taskQueue(queue) {
-        _handler = Block_copy(handler);
-        apply();
-    }
-    
+    Filter(Image *source, TaskQueue *queue, FilterCompletionHandler handler);
     ~Filter();
     
     // getter

@@ -8,7 +8,16 @@
 
 #import "AppDelegate.h"
 
+#import "SequentialTaskQueue.h"
+#import "GrayscaleFilter.h"
+#import "Image.h"
+
+static SequentialTaskQueue * seqTaskQueue;
+
 @interface AppDelegate ()
+
+@property (nonatomic) Image *img;
+@property (nonatomic) Filter *filter;
 
 - (void)handleImage:(NSString *)imagePath;
 
@@ -19,13 +28,45 @@
 @synthesize window = _window;
 @synthesize drawer = _drawer;
 @synthesize imagePathField = _imagePathField;
-@synthesize _imgView;
+@synthesize imgView = _imgView;
+@synthesize img = _img;
+@synthesize filter = _filter;
+
+#pragma mark -
+
+- (void)dealloc {
+    if (_filter)
+        delete _filter;
+    if (_img)
+        delete _img;
+}
+
+#pragma mark -
+
+- (void)setImg:(Image *)img {
+    if (_img == img)
+        return;
+    if (_img)
+        delete _img;
+    _img = img;
+}
+
+- (void)setFilter:(Filter *)filter {
+    if (filter == _filter)
+        return;
+    if (_filter)
+        delete _filter;
+    _filter = filter;
+}
+
+#pragma mark - NSApplicationDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [_drawer open];
+    
+    seqTaskQueue = new SequentialTaskQueue();
 }
-
 
 #pragma mark - IBAction
 
@@ -52,10 +93,18 @@
 }
 
 - (IBAction)gcdGrayscaleApply:(id)sender {
-    
+    CGImageRef cgImg = [_imgView.image CGImageForProposedRect:NULL context:NULL hints:NULL];
+    self.img = new Image(cgImg);
+    self.filter = new GrayscaleFilter(self.img, seqTaskQueue, ^(Filter *filter) {
+        Image *img = filter->getResult();
+        CGContextRef context = img->getContext();
+        CGImageRef cgImg = CGBitmapContextCreateImage(context);
+        _imgView.image = [[NSImage alloc] initWithCGImage:cgImg size:NSMakeSize(img->getWidth(), img->getHeight())];
+    });
 }
 
 - (IBAction)tpGrayscaleApply:(id)sender {
+    
 }
 
 #pragma mark -

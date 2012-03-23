@@ -34,6 +34,12 @@ public:
 
 #pragma mark -
 
+Filter::Filter(Image *source, TaskQueue *queue, FilterCompletionHandler handler)
+: _source(source), _taskQueue(queue) {
+    _handler = Block_copy(handler);
+    apply();
+}
+
 Filter::~Filter() {
     if (_tasks) {
         for (int i = 0; i < _w * _h; i++) {

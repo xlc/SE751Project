@@ -12,7 +12,7 @@
 		0691C8F5151AEE7F00450DEB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0691C8F3151AEE7F00450DEB /* InfoPlist.strings */; };
 		0691C8F7151AEE7F00450DEB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0691C8F6151AEE7F00450DEB /* main.m */; };
 		0691C8FB151AEE7F00450DEB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 0691C8F9151AEE7F00450DEB /* Credits.rtf */; };
-		0691C8FE151AEE7F00450DEB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0691C8FD151AEE7F00450DEB /* AppDelegate.m */; };
+		0691C8FE151AEE7F00450DEB /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0691C8FD151AEE7F00450DEB /* AppDelegate.mm */; };
 		0691C901151AEE7F00450DEB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0691C8FF151AEE7F00450DEB /* MainMenu.xib */; };
 		06B7B878151B151B00470B72 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06B7B877151B151B00470B72 /* Image.cpp */; };
 		06B7B87C151B1FF800470B72 /* SequentialTaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06B7B87B151B1FF800470B72 /* SequentialTaskQueue.cpp */; };
@@ -37,7 +37,7 @@
 		0691C8F8151AEE7F00450DEB /* ImageFilter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ImageFilter-Prefix.pch"; sourceTree = "<group>"; };
 		0691C8FA151AEE7F00450DEB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		0691C8FC151AEE7F00450DEB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		0691C8FD151AEE7F00450DEB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		0691C8FD151AEE7F00450DEB /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		0691C900151AEE7F00450DEB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		06B7B877151B151B00470B72 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Image.cpp; sourceTree = "<group>"; };
 		06B7B87A151B1FE900470B72 /* SequentialTaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequentialTaskQueue.h; sourceTree = "<group>"; };
@@ -125,7 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				0691C8FC151AEE7F00450DEB /* AppDelegate.h */,
-				0691C8FD151AEE7F00450DEB /* AppDelegate.m */,
+				0691C8FD151AEE7F00450DEB /* AppDelegate.mm */,
 				0691C8FF151AEE7F00450DEB /* MainMenu.xib */,
 			);
 			name = UI;
@@ -222,7 +222,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0691C8F7151AEE7F00450DEB /* main.m in Sources */,
-				0691C8FE151AEE7F00450DEB /* AppDelegate.m in Sources */,
+				0691C8FE151AEE7F00450DEB /* AppDelegate.mm in Sources */,
 				06DC28F8151B05CD006B8C8E /* Task.cpp in Sources */,
 				0615161B151B116300E585C8 /* GCDTaskQueue.cpp in Sources */,
 				06B7B878151B151B00470B72 /* Image.cpp in Sources */,

@@ -16,7 +16,8 @@ protected:
     virtual void applyFilter(const Image *source, Image *target, size_t x, size_t y);
     
 public:
-    
+    GrayscaleFilter(Image *source, TaskQueue *queue, FilterCompletionHandler handler)
+    :Filter(source, queue, handler) {}
     
 };
 

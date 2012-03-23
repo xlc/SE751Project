@@ -13,7 +13,7 @@
 @property (assign) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSDrawer *drawer;
 @property (weak) IBOutlet NSTextField *imagePathField;
-@property (weak) IBOutlet NSImageView *_imgView;
+@property (weak) IBOutlet NSImageView *imgView;
 
 - (IBAction)openImage:(id)sender;
 - (IBAction)selectImage:(id)sender;

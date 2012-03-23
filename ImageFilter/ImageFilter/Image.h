@@ -11,6 +11,10 @@
 
 #include <ApplicationServices/ApplicationServices.h>
 
+typedef struct {
+    unsigned char r, g, b;
+} Pixel;
+
 class Image {
 private:
     void init(size_t width, size_t height, void *data);
@@ -37,6 +41,22 @@ public:
     unsigned char *getData() { return _data; }
     unsigned char const *getData() const { return _data; }
     CGContextRef getContext() { return _context; }
+    Pixel getPixel(size_t x, size_t y) const {
+        size_t idx = (y * _width + x) * 3;
+        Pixel p;
+        p.r = _data[idx];
+        p.g = _data[idx+1];
+        p.b = _data[idx+2];
+        return p;
+    }
+    
+    // setter
+    void setPixel(Pixel p, size_t x, size_t y) {
+        size_t idx = (y * _width + x) * 3;
+        _data[idx] = p.r;
+        _data[idx+1] = p.g;
+        _data[idx+2] = p.b;
+    }
 };
 
 #endif

@@ -11,7 +11,7 @@
 #include <thread>
 
 SequentialTaskQueue::SequentialTaskQueue() {
-    std::thread(worker_thread, this);
+    new std::thread(worker_thread, this);
 }
 
 SequentialTaskQueue::~SequentialTaskQueue() {
