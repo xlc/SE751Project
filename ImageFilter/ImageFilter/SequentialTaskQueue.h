@@ -18,10 +18,10 @@ class SequentialTaskQueue;
 
 void worker_thread(SequentialTaskQueue *queue);
 
-class SequentialTaskQueue : TaskQueue {
+class SequentialTaskQueue : public TaskQueue {
 private:
     std::list<std::pair<Task *, bool>> _tasks;
-    enum {
+    volatile enum {
         StopThread,
         NewTask,
     } _action;

@@ -14,13 +14,13 @@
 
 class Task;
 
-typedef void(^CompletionHandler)(Task *task);
+typedef void(^TaskCompletionHandler)(Task *task);
 
 class Task {
 private:
     bool _completed;
     bool _executing;
-    CompletionHandler _completionHandler;
+    TaskCompletionHandler _completionHandler;
     std::condition_variable _executingCV;
     
 protected:
@@ -42,7 +42,7 @@ public:
     // wait until this task completed
     void join();
     
-    void setCompletionHandler(CompletionHandler handler);
+    void setTaskCompletionHandler(TaskCompletionHandler handler);
 };
 
 #endif

@@ -16,6 +16,8 @@
 		0691C901151AEE7F00450DEB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0691C8FF151AEE7F00450DEB /* MainMenu.xib */; };
 		06B7B878151B151B00470B72 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06B7B877151B151B00470B72 /* Image.cpp */; };
 		06B7B87C151B1FF800470B72 /* SequentialTaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06B7B87B151B1FF800470B72 /* SequentialTaskQueue.cpp */; };
+		06B7B87F151C42F100470B72 /* GrayscaleFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06B7B87E151C42F100470B72 /* GrayscaleFilter.cpp */; };
+		06B7B882151C585000470B72 /* Filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06B7B881151C585000470B72 /* Filter.cpp */; };
 		06DC28F8151B05CD006B8C8E /* Task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06DC28F7151B05CD006B8C8E /* Task.cpp */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +42,9 @@
 		06B7B877151B151B00470B72 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Image.cpp; sourceTree = "<group>"; };
 		06B7B87A151B1FE900470B72 /* SequentialTaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequentialTaskQueue.h; sourceTree = "<group>"; };
 		06B7B87B151B1FF800470B72 /* SequentialTaskQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SequentialTaskQueue.cpp; sourceTree = "<group>"; };
+		06B7B87D151C42E500470B72 /* GrayscaleFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrayscaleFilter.h; sourceTree = "<group>"; };
+		06B7B87E151C42F100470B72 /* GrayscaleFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GrayscaleFilter.cpp; sourceTree = "<group>"; };
+		06B7B881151C585000470B72 /* Filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Filter.cpp; sourceTree = "<group>"; };
 		06DC28F5151B048D006B8C8E /* TaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskQueue.h; sourceTree = "<group>"; };
 		06DC28F6151B04CF006B8C8E /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		06DC28F7151B05CD006B8C8E /* Task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Task.cpp; sourceTree = "<group>"; };
@@ -130,6 +135,9 @@
 			isa = PBXGroup;
 			children = (
 				0615161C151B11A100E585C8 /* Filter.h */,
+				06B7B881151C585000470B72 /* Filter.cpp */,
+				06B7B87D151C42E500470B72 /* GrayscaleFilter.h */,
+				06B7B87E151C42F100470B72 /* GrayscaleFilter.cpp */,
 				0615161D151B121C00E585C8 /* Image.h */,
 				06B7B877151B151B00470B72 /* Image.cpp */,
 			);
@@ -219,6 +227,8 @@
 				0615161B151B116300E585C8 /* GCDTaskQueue.cpp in Sources */,
 				06B7B878151B151B00470B72 /* Image.cpp in Sources */,
 				06B7B87C151B1FF800470B72 /* SequentialTaskQueue.cpp in Sources */,
+				06B7B87F151C42F100470B72 /* GrayscaleFilter.cpp in Sources */,
+				06B7B882151C585000470B72 /* Filter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

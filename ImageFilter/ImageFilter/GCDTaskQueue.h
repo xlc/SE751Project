@@ -11,8 +11,7 @@
 
 #include "TaskQueue.h"
 
-class GCDTaskQueue {
-    
+class GCDTaskQueue : public TaskQueue {
     
 public:
     

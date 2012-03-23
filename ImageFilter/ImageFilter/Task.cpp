@@ -33,7 +33,7 @@ void Task::start() {
     _executingCV.notify_all();
 }
 
-void Task::setCompletionHandler(CompletionHandler handler) {
+void Task::setTaskCompletionHandler(TaskCompletionHandler handler) {
     std::lock_guard<std::mutex> lk(_mutex);
     if (_completionHandler) {
         Block_release(_completionHandler);
@@ -44,6 +44,8 @@ void Task::setCompletionHandler(CompletionHandler handler) {
 }
 
 void Task::join() {
+    if (_completed)
+        return;
     std::unique_lock<std::mutex> lk(_mutex);
     _executingCV.wait(lk);
 }
