@@ -25,6 +25,7 @@ protected:
     std::condition_variable _cv;
     
 public:
+    virtual ~TaskQueue() {};
     
     // add a task to queue
     virtual void addTask(TaskRef task) = 0;

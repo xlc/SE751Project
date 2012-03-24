@@ -37,6 +37,8 @@ protected:
     friend TaskQueue;
     
 public:
+    virtual ~Task() {}
+    
     // start this task, should only be called from TaskQueue
     void start();
     

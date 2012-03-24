@@ -8,3 +8,9 @@
 
 #include "GCDTaskQueue.h"
 
+
+void GCDTaskQueue::addTask(TaskRef task) {
+    dispatch_async(_queue, ^{
+        task->start();
+    });
+}

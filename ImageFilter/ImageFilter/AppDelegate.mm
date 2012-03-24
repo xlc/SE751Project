@@ -63,8 +63,7 @@ static TaskQueue *taskQueues[3];
     [_drawer open];
     
     // create task queues
-    taskQueues[0] = new SequentialTaskQueue();
-//    taskQueues[0] = new GCDTaskQueue();
+    taskQueues[0] = new GCDTaskQueue();
     taskQueues[1] = new SequentialTaskQueue();
 //    taskQueues[1] = new ThreadPoolTaskQueue();
     taskQueues[2] = new SequentialTaskQueue();
