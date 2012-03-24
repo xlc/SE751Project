@@ -18,7 +18,9 @@
 class TaskQueue {
     
 protected:
+    // shared mutex, acquire it before modify anything
     std::mutex _mutex;
+    // shared condition variable, use it to wait/notify event
     std::condition_variable _cv;
     
 public:

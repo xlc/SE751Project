@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#include "GCDTaskQueue.h"
+#include "ThreadPoolTaskQueue.h"
 #import "SequentialTaskQueue.h"
 #import "GrayscaleFilter.h"
 #import "Image.h"
@@ -70,7 +72,9 @@ static TaskQueue *taskQueues[3];
     
     // create task queues
     taskQueues[0] = new SequentialTaskQueue();
+//    taskQueues[0] = new GCDTaskQueue();
     taskQueues[1] = new SequentialTaskQueue();
+//    taskQueues[1] = new ThreadPoolTaskQueue();
     taskQueues[2] = new SequentialTaskQueue();
     
     // set default task queue

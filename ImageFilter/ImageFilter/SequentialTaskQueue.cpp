@@ -30,8 +30,6 @@ void SequentialTaskQueue::addTask(Task *task, bool freeWhenDone) {
 }
 
 void SequentialTaskQueue::removeTask(Task *task) {
-    if (task->isExecuting())
-        return; // should not remove executing task
     std::lock_guard<std::mutex> lk(_mutex);
     std::list<std::pair<Task *, bool>>::iterator it;
     for (it = _tasks.begin(); it != _tasks.end(); it++) {
