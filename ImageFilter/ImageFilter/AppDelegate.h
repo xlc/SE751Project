@@ -15,6 +15,7 @@
 @property (weak) IBOutlet NSTextField *imagePathField;
 @property (weak) IBOutlet NSImageView *imgView;
 @property (weak) IBOutlet NSProgressIndicator *progressBar;
+@property (weak) IBOutlet NSTextField *timeLabel;
 
 - (IBAction)openImage:(id)sender;
 - (IBAction)selectImage:(id)sender;

@@ -28,6 +28,7 @@ static TaskQueue *taskQueues[3];
     TaskQueue * _taskQueue;
     BOOL _processing;
     ImageRef _img;
+    NSDate *_startTime;
 }
 
 @synthesize window = _window;
@@ -35,6 +36,7 @@ static TaskQueue *taskQueues[3];
 @synthesize imagePathField = _imagePathField;
 @synthesize imgView = _imgView;
 @synthesize progressBar = _progressBar;
+@synthesize timeLabel = _timeLabel;
 @synthesize filter = _filter;
 
 #pragma mark -
@@ -115,7 +117,11 @@ static TaskQueue *taskQueues[3];
         _imgView.image = [[NSImage alloc] initWithCGImage:cgImg size:NSMakeSize(img->getWidth(), img->getHeight())];
         [_progressBar stopAnimation:nil];
         _processing = NO;
+        NSDate *endTime = [NSDate date];
+        NSTimeInterval dt = [endTime timeIntervalSinceDate:_startTime];
+        _timeLabel.stringValue = [NSString stringWithFormat:@"Time Taken: %.2lf seconds", dt];
     });
+    _startTime = [NSDate date];
     self.filter->apply();
 }
 
