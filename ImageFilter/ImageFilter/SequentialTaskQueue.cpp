@@ -12,12 +12,13 @@
 #include <iostream>
 
 SequentialTaskQueue::SequentialTaskQueue() {
-    new std::thread(worker_thread, this);
+    _thread = new std::thread(worker_thread, this);
 }
 
 SequentialTaskQueue::~SequentialTaskQueue() {
     _action = StopThread;
     _cv.notify_one();
+    delete _thread;
 }
 
 void SequentialTaskQueue::addTask(TaskRef task) {

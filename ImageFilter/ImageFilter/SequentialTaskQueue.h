@@ -11,6 +11,7 @@
 
 #include <list>
 #include <utility>
+#include <thread>
 
 #include "TaskQueue.h"
 
@@ -20,6 +21,7 @@ void worker_thread(SequentialTaskQueue *queue);
 
 class SequentialTaskQueue : public TaskQueue {
 private:
+    std::thread *_thread;
     std::list<TaskRef> _tasks;
     volatile enum {
         StopThread,

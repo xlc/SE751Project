@@ -12,6 +12,11 @@
 #include <Block.h>
 #include <dispatch/dispatch.h>
 
+Task::~Task() {
+    if (_completionHandler)
+        Block_release(_completionHandler);
+}
+
 void Task::start() {
     {
         std::lock_guard<std::mutex> lk(_mutex);
