@@ -18,13 +18,13 @@
 
 class FilterTask : public Task {
     Filter *_filter;
-    const Image *_source;
-    Image *_target;
+    const ImageRef _source;
+    ImageRef _target;
     size_t _x;
     size_t _y;
     
 public:
-    FilterTask(Filter *filter, const Image *source, Image *target, size_t x, size_t y)
+    FilterTask(Filter *filter, const ImageRef source, ImageRef target, size_t x, size_t y)
     : Task(), _filter(filter), _source(source), _target(target), _x(x), _y(y)
     {}
     
@@ -36,18 +36,12 @@ public:
 
 #pragma mark -
 
-Filter::Filter(Image *source, TaskQueue *queue, FilterCompletionHandler handler)
-: _taskQueue(queue), _source(source), _result(NULL), _tasks(NULL), _w(0), _h(0) {
+Filter::Filter(ImageRef source, TaskQueue *queue, FilterCompletionHandler handler)
+: _taskQueue(queue), _source(source), _result(nullptr), _w(0), _h(0) {
     _handler = Block_copy(handler);
 }
 
 Filter::~Filter() {
-    if (_tasks) {
-        for (int i = 0; i < _w * _h; i++) {
-            delete _tasks[i];
-        }
-        delete [] _tasks;
-    }
     Block_release(_handler);
 }
 
@@ -60,8 +54,7 @@ void Filter::apply() {
     _w = _source->getWidth();
     _h = _source->getHeight();
     
-    _tasks = new Task *[_w * _h];
-    _result = new Image(_w, _h);
+    _result = ImageRef(new Image(_w, _h));
     
     __block size_t taskCount = _w * _h;
     pthread_mutex_t *lock = NULL;
@@ -70,13 +63,12 @@ void Filter::apply() {
         assert(pthread_mutex_init(lock, NULL) == 0);
     }
     
-    BlockTask *blockTask = new BlockTask(^{
-        int i = 0;
+    TaskRef blockTask(new BlockTask(^{
         for (int x = 0; x < _w; x++) {
             for (int y = 0; y < _h; y++) {
-                FilterTask *task = new FilterTask(this, _source, _result, x, y);
+                TaskRef task(new FilterTask(this, _source, _result, x, y));
                 if (_handler) {
-                    task->setTaskCompletionHandler(^(Task *task) {
+                    task->setTaskCompletionHandler(^() {
                         assert(pthread_mutex_lock(lock) == 0);
                         taskCount--;
                         bool done = taskCount == 0;
@@ -89,25 +81,14 @@ void Filter::apply() {
                     });
                 }
                 _taskQueue->addTask(task);
-                _tasks[i++] = task;
             }
         }
 
-    });
+    }));
     
-    _taskQueue->addTask(blockTask, true);
+    _taskQueue->addTask(blockTask);
 }
 
-Image * Filter::getResult() {
-    if (_tasks) {
-        for (int i = 0; i < _w * _h; i++) {
-            _tasks[i]->join();  // wait until all tasks completed
-        }
-        for (int i = 0; i < _w * _h; i++) {
-            delete _tasks[i];
-        }
-        delete [] _tasks;
-        _tasks = NULL;
-    }
+ImageRef Filter::getResult() {
     return _result;
 }

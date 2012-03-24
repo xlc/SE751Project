@@ -26,8 +26,9 @@ void Task::start() {
         _executing = false;
     }
     if (_completionHandler) {   // call this method on main thread
+        TaskCompletionHandler handler = _completionHandler; // to make block copy handler instead of `this`
         dispatch_async(dispatch_get_main_queue(), ^{
-            _completionHandler(this);
+            handler();
         });
     }
     _executingCV.notify_all();

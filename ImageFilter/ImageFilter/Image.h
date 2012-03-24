@@ -9,8 +9,13 @@
 #ifndef ImageFilter_Image_h
 #define ImageFilter_Image_h
 
+#include <memory>
+
 #include <ApplicationServices/ApplicationServices.h>
 
+class Image;
+
+typedef std::shared_ptr<Image> ImageRef;
 typedef struct {
     unsigned char r, g, b, a;
 } Pixel;

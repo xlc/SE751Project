@@ -20,7 +20,7 @@ void worker_thread(SequentialTaskQueue *queue);
 
 class SequentialTaskQueue : public TaskQueue {
 private:
-    std::list<std::pair<Task *, bool>> _tasks;
+    std::list<TaskRef> _tasks;
     volatile enum {
         StopThread,
         NewTask,
@@ -32,10 +32,10 @@ public:
     SequentialTaskQueue();
     ~SequentialTaskQueue();
     
-    void addTask(Task *task, bool freeWhenDone);
-    void removeTask(Task *task);
+    void addTask(TaskRef task);
+    void removeTask(TaskRef task);
     void removeAllRemainTasks();
-    std::vector<Task *> getTasks();
+    std::list<TaskRef> getTasks();
     unsigned int getTaskCount();
 };
 

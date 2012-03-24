@@ -10,7 +10,7 @@
 
 #include "Image.h"
 
-void GrayscaleFilter::applyFilter(const Image *source, Image *target, size_t x, size_t y) {
+void GrayscaleFilter::applyFilter(const ImageRef source, ImageRef target, size_t x, size_t y) {
     Pixel p = source->getPixel(x, y);
     int sum = p.r + p.g + p.b;
     p.r = p.g = p.b = sum / 3;

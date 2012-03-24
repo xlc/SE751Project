@@ -20,20 +20,20 @@ SequentialTaskQueue::~SequentialTaskQueue() {
     _cv.notify_one();
 }
 
-void SequentialTaskQueue::addTask(Task *task, bool freeWhenDone) {
+void SequentialTaskQueue::addTask(TaskRef task) {
     {
         std::lock_guard<std::mutex> lk(_mutex);
-        _tasks.push_back(std::pair<Task *, bool>(task, freeWhenDone));
+        _tasks.push_back(task);
         _action = NewTask;
     }
     _cv.notify_one();
 }
 
-void SequentialTaskQueue::removeTask(Task *task) {
+void SequentialTaskQueue::removeTask(TaskRef task) {
     std::lock_guard<std::mutex> lk(_mutex);
-    std::list<std::pair<Task *, bool>>::iterator it;
+    std::list<TaskRef>::iterator it;
     for (it = _tasks.begin(); it != _tasks.end(); it++) {
-        if (it->first == task) {
+        if (*it == task) {
             _tasks.erase(it);
             break;
         }
@@ -42,17 +42,11 @@ void SequentialTaskQueue::removeTask(Task *task) {
 
 void SequentialTaskQueue::removeAllRemainTasks() {
     std::lock_guard<std::mutex> lk(_mutex);
-    _tasks = std::list<std::pair<Task *, bool>>();
+    _tasks = std::list<TaskRef>();
 }
 
-std::vector<Task *> SequentialTaskQueue::getTasks() {
-    std::lock_guard<std::mutex> lk(_mutex);
-    std::vector<Task *> list(_tasks.size());
-    std::list<std::pair<Task *, bool>>::iterator it;
-    for (it == _tasks.begin(); it != _tasks.end(); it++) {
-        list.push_back(it->first);
-    }
-    return list;
+std::list<TaskRef> SequentialTaskQueue::getTasks() {
+    return _tasks;
 }
 
 unsigned int SequentialTaskQueue::getTaskCount() {
@@ -61,9 +55,9 @@ unsigned int SequentialTaskQueue::getTaskCount() {
 }
 
 void worker_thread(SequentialTaskQueue *queue) {
-    Task *task = NULL;
+    TaskRef task = nullptr;
     for (;;) {  // run loop
-        if (task == NULL) { // if did not get a task last time
+        if (!task) { // if did not get a task last time
                             // than wait
             std::unique_lock<std::mutex> lk(queue->_mutex);
             queue->_cv.wait(lk);
@@ -75,22 +69,18 @@ void worker_thread(SequentialTaskQueue *queue) {
                 
             case SequentialTaskQueue::NewTask:
             {
-                task = NULL;
-                bool shouldFree;
+                task = nullptr;
                 {
                     std::lock_guard<std::mutex> lk(queue->_mutex);
-                    std::list<std::pair<Task *, bool>>::iterator it;
+                    std::list<TaskRef>::iterator it;
                     if (queue->_tasks.size() != 0) {
                         it = queue->_tasks.begin();
-                        task = it->first;
-                        shouldFree = it->second;
+                        task = *it;
                         queue->_tasks.erase(it);
                     }
                 }   // release lock
                 if (task) {
                     task->start();
-                    if (shouldFree)
-                        delete task;
                 }
             }
                 break;

@@ -9,9 +9,10 @@
 #ifndef ImageFilter_TaskQueue_h
 #define ImageFilter_TaskQueue_h
 
-#include <vector>
+#include <list>
 #include <condition_variable>
 #include <mutex>
+#include <memory.h>
 
 #include "Task.h"
 
@@ -26,23 +27,21 @@ protected:
 public:
     
     // add a task to queue
-    void addTask(Task *task) { addTask(task, false); }
-    // if freeWhenDone than delete task after complete it
-    virtual void addTask(Task *task, bool freeWhenDone) = 0;
+    virtual void addTask(TaskRef task) = 0;
     // remove a task from queue
-    virtual void removeTask(Task *task) = 0;
+    virtual void removeTask(TaskRef task) = 0;
     // remove all not started taskes
     virtual void removeAllRemainTasks() = 0;
     
     // get a list of all task that not executed yet
-    virtual std::vector<Task *> getTasks() = 0;
+    virtual std::list<TaskRef> getTasks() = 0;
     // get count of all unfinished tasks
     virtual unsigned int getTaskCount() = 0;
     
     // block wait until all tasks completed
     virtual void join() {
-        std::vector<Task *> tasks = getTasks();
-        std::vector<Task *>::iterator it;
+        std::list<TaskRef> tasks = getTasks();
+        std::list<TaskRef>::iterator it;
         for (it = tasks.begin(); it != tasks.end(); it++) {
             (*it)->join();
         }

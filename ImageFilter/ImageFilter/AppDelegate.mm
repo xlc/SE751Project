@@ -18,7 +18,6 @@ static TaskQueue *taskQueues[3];
 
 @interface AppDelegate ()
 
-@property (nonatomic) Image *img;
 @property (nonatomic) Filter *filter;
 
 - (void)handleImage:(NSString *)imagePath;
@@ -27,6 +26,8 @@ static TaskQueue *taskQueues[3];
 
 @implementation AppDelegate {
     TaskQueue * _taskQueue;
+    BOOL _processing;
+    ImageRef _img;
 }
 
 @synthesize window = _window;
@@ -34,7 +35,6 @@ static TaskQueue *taskQueues[3];
 @synthesize imagePathField = _imagePathField;
 @synthesize imgView = _imgView;
 @synthesize progressBar = _progressBar;
-@synthesize img = _img;
 @synthesize filter = _filter;
 
 #pragma mark -
@@ -42,19 +42,9 @@ static TaskQueue *taskQueues[3];
 - (void)dealloc {
     if (_filter)
         delete _filter;
-    if (_img)
-        delete _img;
 }
 
 #pragma mark -
-
-- (void)setImg:(Image *)img {
-    if (_img == img)
-        return;
-    if (_img)
-        delete _img;
-    _img = img;
-}
 
 - (void)setFilter:(Filter *)filter {
     if (filter == _filter)
@@ -110,17 +100,21 @@ static TaskQueue *taskQueues[3];
         return;
     
     // TODO what to do when user click button while processing a image?
+    if (_processing)
+        return;
     
     [_progressBar startAnimation:nil];
+    _processing = YES;
     
     CGImageRef cgImg = [_imgView.image CGImageForProposedRect:NULL context:NULL hints:NULL];
-    self.img = new Image(cgImg);
-    self.filter = new GrayscaleFilter(self.img, _taskQueue, ^(Filter *filter) {
-        Image *img = filter->getResult();
+    _img = ImageRef(new Image(cgImg));
+    self.filter = new GrayscaleFilter(_img, _taskQueue, ^(Filter *filter) {
+        ImageRef img = filter->getResult();
         CGContextRef context = img->getContext();
         CGImageRef cgImg = CGBitmapContextCreateImage(context);
         _imgView.image = [[NSImage alloc] initWithCGImage:cgImg size:NSMakeSize(img->getWidth(), img->getHeight())];
         [_progressBar stopAnimation:nil];
+        _processing = NO;
     });
     self.filter->apply();
 }

@@ -11,11 +11,13 @@
 
 #include <mutex>
 #include <condition_variable>
+#include <memory>
 
 class TaskQueue;
 class Task;
 
-typedef void(^TaskCompletionHandler)(Task *task);
+typedef std::shared_ptr<Task> TaskRef;
+typedef void(^TaskCompletionHandler)();
 
 class Task {
 private:
