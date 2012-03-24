@@ -45,6 +45,7 @@
 		06B7B87D151C42E500470B72 /* GrayscaleFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrayscaleFilter.h; sourceTree = "<group>"; };
 		06B7B87E151C42F100470B72 /* GrayscaleFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GrayscaleFilter.cpp; sourceTree = "<group>"; };
 		06B7B881151C585000470B72 /* Filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Filter.cpp; sourceTree = "<group>"; };
+		06B7B887151C970D00470B72 /* BlockTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockTask.h; sourceTree = "<group>"; };
 		06DC28F5151B048D006B8C8E /* TaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskQueue.h; sourceTree = "<group>"; };
 		06DC28F6151B04CF006B8C8E /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		06DC28F7151B05CD006B8C8E /* Task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Task.cpp; sourceTree = "<group>"; };
@@ -154,6 +155,7 @@
 				06B7B87B151B1FF800470B72 /* SequentialTaskQueue.cpp */,
 				06151618151B115700E585C8 /* GCDTaskQueue.h */,
 				0615161A151B116300E585C8 /* GCDTaskQueue.cpp */,
+				06B7B887151C970D00470B72 /* BlockTask.h */,
 			);
 			name = TaskQueue;
 			sourceTree = "<group>";

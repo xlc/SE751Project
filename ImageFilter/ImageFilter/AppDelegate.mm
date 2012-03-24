@@ -12,7 +12,7 @@
 #import "GrayscaleFilter.h"
 #import "Image.h"
 
-static SequentialTaskQueue * seqTaskQueue;
+static TaskQueue *taskQueues[3];
 
 @interface AppDelegate ()
 
@@ -23,12 +23,15 @@ static SequentialTaskQueue * seqTaskQueue;
 
 @end
 
-@implementation AppDelegate
+@implementation AppDelegate {
+    TaskQueue * _taskQueue;
+}
 
 @synthesize window = _window;
 @synthesize drawer = _drawer;
 @synthesize imagePathField = _imagePathField;
 @synthesize imgView = _imgView;
+@synthesize progressBar = _progressBar;
 @synthesize img = _img;
 @synthesize filter = _filter;
 
@@ -65,7 +68,13 @@ static SequentialTaskQueue * seqTaskQueue;
 {
     [_drawer open];
     
-    seqTaskQueue = new SequentialTaskQueue();
+    // create task queues
+    taskQueues[0] = new SequentialTaskQueue();
+    taskQueues[1] = new SequentialTaskQueue();
+    taskQueues[2] = new SequentialTaskQueue();
+    
+    // set default task queue
+    _taskQueue = taskQueues[0];
 }
 
 #pragma mark - IBAction
@@ -92,24 +101,28 @@ static SequentialTaskQueue * seqTaskQueue;
     [_drawer toggle:self];
 }
 
-- (IBAction)gcdGrayscaleApply:(id)sender {
-    if (!_imgView.image)
+- (IBAction)grayscaleApply:(id)sender {
+    if (!_imgView.image)    // do nothing when no image loaded
         return;
+    
+    // TODO what to do when user click button while processing a image?
+    
+    [_progressBar startAnimation:nil];
     
     CGImageRef cgImg = [_imgView.image CGImageForProposedRect:NULL context:NULL hints:NULL];
     self.img = new Image(cgImg);
-    self.filter = new GrayscaleFilter(self.img, seqTaskQueue, ^(Filter *filter) {
+    self.filter = new GrayscaleFilter(self.img, _taskQueue, ^(Filter *filter) {
         Image *img = filter->getResult();
         CGContextRef context = img->getContext();
         CGImageRef cgImg = CGBitmapContextCreateImage(context);
         _imgView.image = [[NSImage alloc] initWithCGImage:cgImg size:NSMakeSize(img->getWidth(), img->getHeight())];
+        [_progressBar stopAnimation:nil];
     });
     self.filter->apply();
 }
 
-- (IBAction)tpGrayscaleApply:(id)sender {
-    if (!_imgView.image)
-        return;
+- (IBAction)changeTaskQueue:(NSPopUpButton *)sender {
+    _taskQueue = taskQueues[sender.indexOfSelectedItem];
 }
 
 #pragma mark -

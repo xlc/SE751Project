@@ -14,12 +14,12 @@
 @property (weak) IBOutlet NSDrawer *drawer;
 @property (weak) IBOutlet NSTextField *imagePathField;
 @property (weak) IBOutlet NSImageView *imgView;
+@property (weak) IBOutlet NSProgressIndicator *progressBar;
 
 - (IBAction)openImage:(id)sender;
 - (IBAction)selectImage:(id)sender;
 - (IBAction)toggleDrawer:(id)sender;
-- (IBAction)gcdGrayscaleApply:(id)sender;
-- (IBAction)tpGrayscaleApply:(id)sender;
-
+- (IBAction)changeTaskQueue:(NSPopUpButton *)sender;
+- (IBAction)grayscaleApply:(id)sender;
 
 @end

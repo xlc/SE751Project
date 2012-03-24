@@ -14,6 +14,7 @@
 #include "TaskQueue.h"
 #include "Task.h"
 #include "Image.h"
+#include "BlockTask.h"
 
 class FilterTask : public Task {
     Filter *_filter;
@@ -60,7 +61,6 @@ void Filter::apply() {
     _h = _source->getHeight();
     
     _tasks = new Task *[_w * _h];
-    int i = 0;
     _result = new Image(_w, _h);
     
     __block size_t taskCount = _w * _h;
@@ -70,27 +70,32 @@ void Filter::apply() {
         assert(pthread_mutex_init(lock, NULL) == 0);
     }
     
-    for (int x = 0; x < _w; x++) {
-        for (int y = 0; y < _h; y++) {
-            FilterTask *task = new FilterTask(this, _source, _result, x, y);
-            if (_handler) {
-                task->setTaskCompletionHandler(^(Task *task) {
-                    assert(pthread_mutex_lock(lock) == 0);
-                    taskCount--;
-                    bool done = taskCount == 0;
-                    assert(pthread_mutex_unlock(lock) == 0);
-                    if (done) {
-                        pthread_mutex_destroy(lock);
-                        delete lock;
-                        _handler(this);
-                    }
-                });
+    BlockTask *blockTask = new BlockTask(^{
+        int i = 0;
+        for (int x = 0; x < _w; x++) {
+            for (int y = 0; y < _h; y++) {
+                FilterTask *task = new FilterTask(this, _source, _result, x, y);
+                if (_handler) {
+                    task->setTaskCompletionHandler(^(Task *task) {
+                        assert(pthread_mutex_lock(lock) == 0);
+                        taskCount--;
+                        bool done = taskCount == 0;
+                        assert(pthread_mutex_unlock(lock) == 0);
+                        if (done) {
+                            pthread_mutex_destroy(lock);
+                            delete lock;
+                            _handler(this);
+                        }
+                    });
+                }
+                _taskQueue->addTask(task);
+                _tasks[i++] = task;
             }
-            _taskQueue->addTask(task);
-            _tasks[i++] = task;
         }
-    }
+
+    });
     
+    _taskQueue->addTask(blockTask, true);
 }
 
 Image * Filter::getResult() {
