@@ -15,14 +15,20 @@
 #include <memory.h>
 
 #include "Task.h"
+#include "Atomic.h"
 
 class TaskQueue {
     
 protected:
+    
+//    typedef SpinLock LockType;
+    typedef std::mutex LockType;
+    typedef std::lock_guard<LockType> LockGuard;
+    
     // shared mutex, acquire it before modify anything
-    std::mutex _mutex;
+    LockType _mutex;
     // shared condition variable, use it to wait/notify event
-    std::condition_variable _cv;
+    std::condition_variable_any _cv;
     
 public:
     virtual ~TaskQueue() {};

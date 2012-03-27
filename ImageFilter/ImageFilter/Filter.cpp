@@ -15,6 +15,7 @@
 #include "Task.h"
 #include "Image.h"
 #include "BlockTask.h"
+#include "Atomic.h"
 
 class FilterTask : public Task {
     Filter *_filter;
@@ -56,12 +57,8 @@ void Filter::apply() {
     
     _result = ImageRef(new Image(_w, _h));
     
-    __block size_t taskCount = _w * _h;
-    pthread_mutex_t *lock = NULL;
-    if (_handler) {
-        lock = new pthread_mutex_t;
-        assert(pthread_mutex_init(lock, NULL) == 0);
-    }
+    __block AtomicInteger taskCount((int32_t)(_w * _h));
+    assert((_w * _h) == taskCount.value && "task count overflow");  // overflow check
     
     TaskRef blockTask(new BlockTask(^{
         for (int x = 0; x < _w; x++) {
@@ -69,13 +66,9 @@ void Filter::apply() {
                 TaskRef task(new FilterTask(this, _source, _result, x, y));
                 if (_handler) {
                     task->setTaskCompletionHandler(^() {
-                        assert(pthread_mutex_lock(lock) == 0);
-                        taskCount--;
-                        bool done = taskCount == 0;
-                        assert(pthread_mutex_unlock(lock) == 0);
+                        taskCount.decrease();
+                        bool done = taskCount.isEqual(0);
                         if (done) {
-                            pthread_mutex_destroy(lock);
-                            delete lock;
                             _handler(this);
                         }
                     });

@@ -10,6 +10,7 @@
 
 #include <thread>
 #include <iostream>
+#include <mutex>
 
 SequentialTaskQueue::SequentialTaskQueue() {
     _thread = new std::thread(worker_thread, this);
@@ -23,7 +24,7 @@ SequentialTaskQueue::~SequentialTaskQueue() {
 
 void SequentialTaskQueue::addTask(TaskRef task) {
     {
-        std::lock_guard<std::mutex> lk(_mutex);
+        LockGuard lk(_mutex);
         _tasks.push_back(task);
         _action = NewTask;
     }
@@ -31,7 +32,7 @@ void SequentialTaskQueue::addTask(TaskRef task) {
 }
 
 void SequentialTaskQueue::removeTask(TaskRef task) {
-    std::lock_guard<std::mutex> lk(_mutex);
+    LockGuard lk(_mutex);
     std::list<TaskRef>::iterator it;
     for (it = _tasks.begin(); it != _tasks.end(); it++) {
         if (*it == task) {
@@ -42,7 +43,7 @@ void SequentialTaskQueue::removeTask(TaskRef task) {
 }
 
 void SequentialTaskQueue::removeAllRemainTasks() {
-    std::lock_guard<std::mutex> lk(_mutex);
+    LockGuard lk(_mutex);
     _tasks = std::list<TaskRef>();
 }
 
@@ -51,7 +52,7 @@ std::list<TaskRef> SequentialTaskQueue::getTasks() {
 }
 
 unsigned int SequentialTaskQueue::getTaskCount() {
-    std::lock_guard<std::mutex> lk(_mutex);
+    LockGuard lk(_mutex);
     return (unsigned int)_tasks.size();
 }
 
@@ -60,7 +61,9 @@ void worker_thread(SequentialTaskQueue *queue) {
     for (;;) {  // run loop
         if (!task) { // if did not get a task last time
                             // than wait
-            std::unique_lock<std::mutex> lk(queue->_mutex);
+//            std::unique_lock<SequentialTaskQueue::LockType> lk(queue->_mutex);
+            std::recursive_mutex r;
+            std::unique_lock<std::recursive_mutex> lk(r);
             queue->_cv.wait(lk);
         }
         
@@ -72,7 +75,7 @@ void worker_thread(SequentialTaskQueue *queue) {
             {
                 task = nullptr;
                 {
-                    std::lock_guard<std::mutex> lk(queue->_mutex);
+                    SequentialTaskQueue::LockGuard lk(queue->_mutex);
                     std::list<TaskRef>::iterator it;
                     if (queue->_tasks.size() != 0) {
                         it = queue->_tasks.begin();
