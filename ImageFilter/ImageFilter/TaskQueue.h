@@ -35,6 +35,13 @@ public:
     
     // add a task to queue
     virtual void addTask(TaskRef task) = 0;
+    virtual void addTaskGroup(TaskGroup *group) {
+        const std::vector<TaskRef> &tasks = group->getTasks();
+        std::vector<TaskRef>::const_iterator it;
+        for (it = tasks.begin(); it != tasks.end(); it++) {
+            addTask(*it);
+        }
+    }
     // remove a task from queue
     virtual void removeTask(TaskRef task) = 0;
     // remove all not started taskes

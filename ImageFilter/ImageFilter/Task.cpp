@@ -30,20 +30,20 @@ void Task::start() {
         _completed = true;
         _executing = false;
     }
-    if (_completionHandler) {   // call this method on main thread
-        TaskCompletionHandler handler = _completionHandler; // to make block copy handler instead of `this`
-        dispatch_async(dispatch_get_main_queue(), ^{
-            handler();
-        });
+    if (_completionHandler) {   // call handler on main thread
+        dispatch_async(dispatch_get_main_queue(), _completionHandler);
     }
-    _executingCV.notify_all();
+    if (_group) {
+        _group->taskCompleted(this);
+    }
+    _cv.notify_all();
 }
 
 void Task::setTaskCompletionHandler(TaskCompletionHandler handler) {
     std::lock_guard<std::mutex> lk(_mutex);
     if (_completionHandler) {
         Block_release(_completionHandler);
-        _completionHandler = NULL;
+        _completionHandler = nullptr;
     }
     if (handler)
         _completionHandler = Block_copy(handler);
@@ -53,5 +53,17 @@ void Task::join() {
     if (_completed)
         return;
     std::unique_lock<std::mutex> lk(_mutex);
-    _executingCV.wait(lk);
+    _cv.wait(lk);
+}
+
+#pragma mark -
+
+void TaskGroup::setCompletionHandler(TaskCompletionHandler handler) {
+    std::lock_guard<std::mutex> lk(_mutex);
+    if (_completionHandler) {
+        Block_release(_completionHandler);
+        _completionHandler = nullptr;
+    }
+    if (handler)
+        _completionHandler = Block_copy(handler);
 }

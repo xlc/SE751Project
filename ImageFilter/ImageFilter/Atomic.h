@@ -42,14 +42,14 @@ typedef struct AtomicInteger {
 } AtomicInteger;
 
 class SpinLock {
-    volatile OSSpinLock l;
+    volatile OSSpinLock _lock;
     
 public:
-    SpinLock(): l(OS_SPINLOCK_INIT) {}
+    SpinLock(): _lock(OS_SPINLOCK_INIT) {}
     
-    void lock() { OSSpinLockLock(&l); }
-    bool try_lock() { return OSSpinLockTry(&l); }
-    void unlock() { return OSSpinLockUnlock(&l); }
+    void lock() { OSSpinLockLock(&_lock); }
+    bool try_lock() { return OSSpinLockTry(&_lock); }
+    void unlock() { return OSSpinLockUnlock(&_lock); }
 };
 
 #endif

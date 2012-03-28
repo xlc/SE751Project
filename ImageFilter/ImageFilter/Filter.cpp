@@ -57,26 +57,23 @@ void Filter::apply() {
     
     _result = ImageRef(new Image(_w, _h));
     
-    __block AtomicInteger taskCount((int32_t)(_w * _h));
-    assert((_w * _h) == taskCount.value && "task count overflow");  // overflow check
-    
     TaskRef blockTask(new BlockTask(^{
+        TaskGroup *group = new TaskGroup();
+        if (_handler) {
+            group->setCompletionHandler(^{
+                _handler(this);
+                delete group;
+            });
+        }
+        
         for (int x = 0; x < _w; x++) {
             for (int y = 0; y < _h; y++) {
-                TaskRef task(new FilterTask(this, _source, _result, x, y));
-                if (_handler) {
-                    task->setTaskCompletionHandler(^() {
-                        taskCount.decrease();
-                        bool done = taskCount.isEqual(0);
-                        if (done) {
-                            _handler(this);
-                        }
-                    });
-                }
-                _taskQueue->addTask(task);
+                TaskRef task(new FilterTask(this, _source, _result, x, y));           
+                group->addTask(task);
             }
         }
-
+        
+        _taskQueue->addTaskGroup(group);
     }));
     
     _taskQueue->addTask(blockTask);
