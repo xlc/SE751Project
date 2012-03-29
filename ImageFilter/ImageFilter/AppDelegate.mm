@@ -8,10 +8,11 @@
 
 #import "AppDelegate.h"
 
-#include "GCDTaskQueue.h"
-#include "ThreadPoolTaskQueue.h"
+#import "GCDTaskQueue.h"
+#import "ThreadPoolTaskQueue.h"
 #import "SequentialTaskQueue.h"
 #import "GrayscaleFilter.h"
+#import "ColorfulFilter.h"
 #import "Image.h"
 
 static TaskQueue *taskQueues[3];
@@ -100,7 +101,7 @@ static TaskQueue *taskQueues[3];
     [_drawer toggle:self];
 }
 
-- (IBAction)grayscaleApply:(id)sender {
+- (IBAction)filterApply:(NSButton *)sender {
     if (!_imgView.image)    // do nothing when no image loaded
         return;
     
@@ -113,7 +114,7 @@ static TaskQueue *taskQueues[3];
     
     CGImageRef cgImg = [_imgView.image CGImageForProposedRect:NULL context:NULL hints:NULL];
     _img = ImageRef(new Image(cgImg));
-    self.filter = new GrayscaleFilter(_img, _taskQueue, _pixelsPerTask, ^(Filter *filter) {
+    FilterCompletionHandler handler = ^(Filter *filter) {
         ImageRef img = filter->getResult();
         CGContextRef context = img->getContext();
         CGImageRef cgImg = CGBitmapContextCreateImage(context);
@@ -123,7 +124,15 @@ static TaskQueue *taskQueues[3];
         NSDate *endTime = [NSDate date];
         NSTimeInterval dt = [endTime timeIntervalSinceDate:_startTime];
         _timeLabel.stringValue = [NSString stringWithFormat:@"Time Taken: %.2lf seconds", dt];
-    });
+    };
+    
+    NSString *buttonName = [sender title];
+    if ([buttonName isEqualToString:@"Grayscale"]) {
+        self.filter = new GrayscaleFilter(_img, _taskQueue, _pixelsPerTask, handler);
+    } else if ([buttonName isEqualToString:@"Colorful"]) {
+        self.filter = new ColorfulFilter(_img, _taskQueue, _pixelsPerTask, handler);
+    }
+    
     _startTime = [NSDate date];
     self.filter->apply();
 }
@@ -140,7 +149,9 @@ static TaskQueue *taskQueues[3];
     } else if (sliderValue == 0.0) {
         _pixelsPerTask = 1;
     } else {
-        _pixelsPerTask = round(area/((1-sliderValue)*1000));
+        int devide = (1 - sliderValue) * 1000;
+        devide = MAX(2, devide);
+        _pixelsPerTask = area/devide;
     }
     _granularityLabel.stringValue = [NSString stringWithFormat:@"Granularity: %dpx", _pixelsPerTask];
 }

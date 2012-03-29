@@ -27,6 +27,7 @@
 		0615161A151B116300E585C8 /* GCDTaskQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GCDTaskQueue.cpp; sourceTree = "<group>"; };
 		0615161C151B11A100E585C8 /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
 		0615161D151B121C00E585C8 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
+		064BC42215245103000697A5 /* ColorfulFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorfulFilter.h; sourceTree = "<group>"; };
 		0691C8E6151AEE7F00450DEB /* ImageFilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0691C8EA151AEE7F00450DEB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		0691C8ED151AEE7F00450DEB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -141,6 +142,7 @@
 			children = (
 				0615161C151B11A100E585C8 /* Filter.h */,
 				06B7B881151C585000470B72 /* Filter.cpp */,
+				064BC42215245103000697A5 /* ColorfulFilter.h */,
 				06B7B87D151C42E500470B72 /* GrayscaleFilter.h */,
 				06B7B87E151C42F100470B72 /* GrayscaleFilter.cpp */,
 				0615161D151B121C00E585C8 /* Image.h */,

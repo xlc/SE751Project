@@ -22,7 +22,7 @@
 - (IBAction)selectImage:(id)sender;
 - (IBAction)toggleDrawer:(id)sender;
 - (IBAction)changeTaskQueue:(NSPopUpButton *)sender;
-- (IBAction)grayscaleApply:(id)sender;
+- (IBAction)filterApply:(NSButton *)sender;
 - (IBAction)changeGranularity:(NSSlider *)sender;
 
 @end

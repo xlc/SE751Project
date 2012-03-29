@@ -18,6 +18,11 @@ class Image;
 typedef std::shared_ptr<Image> ImageRef;
 typedef struct {
     unsigned char r, g, b, a;
+    unsigned char &operator[](const unsigned int idx) {
+        assert(idx < 4);
+        unsigned char *ptr = (unsigned char *)this;
+        return ptr[idx];
+    }
 } Pixel;
 
 class Image {
