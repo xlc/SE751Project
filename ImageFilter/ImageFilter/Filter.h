@@ -28,6 +28,7 @@ protected:
     size_t _w;
     size_t _h;
     FilterCompletionHandler _handler;
+    int _pixelPerTask;
     
     // called for each pixel
     virtual void applyFilter(const ImageRef source, ImageRef target, size_t x, size_t y) = 0;
@@ -35,11 +36,11 @@ protected:
     friend FilterTask;
     
 public:
-    Filter(ImageRef source, TaskQueue *queue, FilterCompletionHandler handler);
+    Filter(ImageRef source, TaskQueue *queue, int ppt, FilterCompletionHandler handler);
     ~Filter();
     
     // apply filter to source image
-    virtual void apply();
+    void apply();
     
     // getter
     TaskQueue *getTaskQueue() const { return _taskQueue; }

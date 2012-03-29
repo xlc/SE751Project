@@ -16,11 +16,13 @@
 @property (weak) IBOutlet NSImageView *imgView;
 @property (weak) IBOutlet NSProgressIndicator *progressBar;
 @property (weak) IBOutlet NSTextField *timeLabel;
+@property (weak) IBOutlet NSTextField *granularityLabel;
 
 - (IBAction)openImage:(id)sender;
 - (IBAction)selectImage:(id)sender;
 - (IBAction)toggleDrawer:(id)sender;
 - (IBAction)changeTaskQueue:(NSPopUpButton *)sender;
 - (IBAction)grayscaleApply:(id)sender;
+- (IBAction)changeGranularity:(NSSlider *)sender;
 
 @end

@@ -29,6 +29,7 @@ static TaskQueue *taskQueues[3];
     BOOL _processing;
     ImageRef _img;
     NSDate *_startTime;
+    int _pixelsPerTask;
 }
 
 @synthesize window = _window;
@@ -37,6 +38,7 @@ static TaskQueue *taskQueues[3];
 @synthesize imgView = _imgView;
 @synthesize progressBar = _progressBar;
 @synthesize timeLabel = _timeLabel;
+@synthesize granularityLabel = _granularityLabel;
 @synthesize filter = _filter;
 
 #pragma mark -
@@ -65,11 +67,13 @@ static TaskQueue *taskQueues[3];
     // create task queues
     taskQueues[0] = new GCDTaskQueue();
     taskQueues[1] = new SequentialTaskQueue();
-//    taskQueues[1] = new ThreadPoolTaskQueue();
+    //    taskQueues[1] = new ThreadPoolTaskQueue();
     taskQueues[2] = new SequentialTaskQueue();
     
     // set default task queue
     _taskQueue = taskQueues[0];
+    
+    _pixelsPerTask = 1;
 }
 
 #pragma mark - IBAction
@@ -109,7 +113,7 @@ static TaskQueue *taskQueues[3];
     
     CGImageRef cgImg = [_imgView.image CGImageForProposedRect:NULL context:NULL hints:NULL];
     _img = ImageRef(new Image(cgImg));
-    self.filter = new GrayscaleFilter(_img, _taskQueue, ^(Filter *filter) {
+    self.filter = new GrayscaleFilter(_img, _taskQueue, _pixelsPerTask, ^(Filter *filter) {
         ImageRef img = filter->getResult();
         CGContextRef context = img->getContext();
         CGImageRef cgImg = CGBitmapContextCreateImage(context);
@@ -122,6 +126,23 @@ static TaskQueue *taskQueues[3];
     });
     _startTime = [NSDate date];
     self.filter->apply();
+}
+
+- (IBAction)changeGranularity:(NSSlider *)sender {
+    if (!_imgView.image)    // do nothing when no image loaded
+        return;
+    
+    CGSize size = _imgView.image.size;
+    int area = size.width * size.height;
+    double sliderValue = sender.doubleValue;
+    if (sliderValue == 1.0) {
+        _pixelsPerTask = area;
+    } else if (sliderValue == 0.0) {
+        _pixelsPerTask = 1;
+    } else {
+        _pixelsPerTask = round(area/((1-sliderValue)*1000));
+    }
+    _granularityLabel.stringValue = [NSString stringWithFormat:@"Granularity: %dpx", _pixelsPerTask];
 }
 
 - (IBAction)changeTaskQueue:(NSPopUpButton *)sender {

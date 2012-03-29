@@ -21,24 +21,27 @@ class FilterTask : public Task {
     Filter *_filter;
     const ImageRef _source;
     ImageRef _target;
-    size_t _x;
-    size_t _y;
+    size_t _start;
+    size_t _length;
     
 public:
-    FilterTask(Filter *filter, const ImageRef source, ImageRef target, size_t x, size_t y)
-    : Task(), _filter(filter), _source(source), _target(target), _x(x), _y(y)
+    FilterTask(Filter *filter, const ImageRef source, ImageRef target, size_t start, size_t length)
+    : Task(), _filter(filter), _source(source), _target(target), _start(start), _length(length)
     {}
     
     virtual void main() {
-        _filter->applyFilter(_source, _target, _x, _y);
+        size_t w = _source->getWidth();
+        for (int i = 0; i < _length; i++) {
+            _filter->applyFilter(_source, _target, (_start+i) % w, (_start+i) / w);
+        }
     }
     
 };
 
 #pragma mark -
 
-Filter::Filter(ImageRef source, TaskQueue *queue, FilterCompletionHandler handler)
-: _taskQueue(queue), _source(source), _result(nullptr), _w(0), _h(0) {
+Filter::Filter(ImageRef source, TaskQueue *queue, int ppt, FilterCompletionHandler handler)
+: _taskQueue(queue), _source(source), _result(nullptr), _w(0), _h(0), _pixelPerTask(ppt) {
     _handler = Block_copy(handler);
 }
 
@@ -48,7 +51,6 @@ Filter::~Filter() {
 
 void Filter::apply() {
     assert(_taskQueue);
-    
     if (_result)
         return;
     
@@ -66,11 +68,18 @@ void Filter::apply() {
             });
         }
         
-        for (int x = 0; x < _w; x++) {
-            for (int y = 0; y < _h; y++) {
-                TaskRef task(new FilterTask(this, _source, _result, x, y));           
-                group->addTask(task);
-            }
+        size_t length = _w * _h;
+        size_t l = length - length % _pixelPerTask;
+        for (size_t i = 0; i < l; i+=_pixelPerTask) {
+            TaskRef task(new FilterTask(this, _source, _result, i, _pixelPerTask));
+            group->addTask(task);
+        }
+        
+        // explicitly handle last task
+        size_t diff = length - l;
+        if (diff != 0) {
+            TaskRef task(new FilterTask(this, _source, _result, l, diff));
+            group->addTask(task);
         }
         
         _taskQueue->addTaskGroup(group);

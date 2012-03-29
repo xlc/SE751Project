@@ -61,9 +61,7 @@ void worker_thread(SequentialTaskQueue *queue) {
     for (;;) {  // run loop
         if (!task) { // if did not get a task last time
                             // than wait
-//            std::unique_lock<SequentialTaskQueue::LockType> lk(queue->_mutex);
-            std::recursive_mutex r;
-            std::unique_lock<std::recursive_mutex> lk(r);
+            std::unique_lock<SequentialTaskQueue::LockType> lk(queue->_mutex);
             queue->_cv.wait(lk);
         }
         
