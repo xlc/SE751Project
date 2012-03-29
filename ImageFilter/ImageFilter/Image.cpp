@@ -15,7 +15,7 @@ Image::Image(CGImageRef cgImg) {
     
     init(w, h, NULL);
     
-    CGRect rect = {{0,0},{_width,_height}}; 
+    CGRect rect = {{0,0},{static_cast<CGFloat>(_width),static_cast<CGFloat>(_height)}}; 
     CGContextDrawImage(_context, rect, cgImg); 
 }
 
