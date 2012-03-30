@@ -21,8 +21,6 @@ static TaskQueue *taskQueues[3];
 
 @property (nonatomic) Filter *filter;
 
-- (void)handleImage:(NSString *)imagePath;
-
 @end
 
 @implementation AppDelegate {
@@ -80,7 +78,9 @@ static TaskQueue *taskQueues[3];
 #pragma mark - IBAction
 
 - (IBAction)openImage:(id)sender {
-    [self handleImage:_imagePathField.stringValue];
+    if (![self loadImage:_imagePathField.stringValue]) {
+        [[NSAlert alertWithMessageText:@"Invalid image path" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"File '%@' is not a valid image", _imagePathField.stringValue] beginSheetModalForWindow:_window modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+    }
 }
 
 - (IBAction)selectImage:(id)sender {
@@ -112,38 +112,41 @@ static TaskQueue *taskQueues[3];
     [_progressBar startAnimation:nil];
     _processing = YES;
     
-    CGImageRef cgImg = [_imgView.image CGImageForProposedRect:NULL context:NULL hints:NULL];
-    _img = ImageRef(new Image(cgImg));
-    FilterCompletionHandler handler = ^(Filter *filter) {
-        ImageRef img = filter->getResult();
-        CGContextRef context = img->getContext();
-        CGImageRef cgImg = CGBitmapContextCreateImage(context);
-        _imgView.image = [[NSImage alloc] initWithCGImage:cgImg size:NSMakeSize(img->getWidth(), img->getHeight())];
-        [_progressBar stopAnimation:nil];
-        _processing = NO;
-        NSDate *endTime = [NSDate date];
-        NSTimeInterval dt = [endTime timeIntervalSinceDate:_startTime];
-        _timeLabel.stringValue = [NSString stringWithFormat:@"Time Taken: %.2lf seconds", dt];
-    };
-    
-    NSString *buttonName = [sender title];
-    if ([buttonName isEqualToString:@"Grayscale"]) {
-        self.filter = new GrayscaleFilter(_img, _taskQueue, _pixelsPerTask, handler);
-    } else if ([buttonName isEqualToString:@"Colorful"]) {
-        self.filter = new ColorfulFilter(_img, _taskQueue, _pixelsPerTask, handler);
-    }
-    
-    _startTime = [NSDate date];
-    self.filter->apply();
+    [self applyFilter:[sender title]];
 }
 
 - (IBAction)changeGranularity:(NSSlider *)sender {
     if (!_imgView.image)    // do nothing when no image loaded
         return;
     
+    [self setGranularity:sender.intValue];
+    
+    _granularityLabel.stringValue = [NSString stringWithFormat:@"Granularity: %dpx", _pixelsPerTask];
+}
+
+- (IBAction)changeTaskQueue:(NSPopUpButton *)sender {
+    _taskQueue = taskQueues[sender.indexOfSelectedItem];
+}
+
+#pragma mark -
+
+- (void)setTaskQueue:(NSString *)taskQueueName {
+    if ([taskQueueName isEqualToString:@"GCDTaskQueue"]) {
+        _taskQueue = taskQueues[0];
+    } else if ([taskQueueName isEqualToString:@"ThreadPoolTaskQueue"]) {
+        _taskQueue = taskQueues[1];
+    } else if ([taskQueueName isEqualToString:@"SequentialTaskQueue"]) {
+        _taskQueue = taskQueues[2];
+    }
+}
+
+- (void)setGranularity:(int)granularity {
+    if (!_imgView.image)    // do nothing when no image loaded
+        return;
+    
     CGSize size = _imgView.image.size;
     int area = size.width * size.height;
-    switch(sender.integerValue) {   // 0 to 8
+    switch(granularity) {   // 0 to 8
         case 0:
             _pixelsPerTask = 1;
             break;
@@ -172,25 +175,53 @@ static TaskQueue *taskQueues[3];
             _pixelsPerTask = area;
             break;
     }
-    
-    _granularityLabel.stringValue = [NSString stringWithFormat:@"Granularity: %dpx", _pixelsPerTask];
 }
 
-- (IBAction)changeTaskQueue:(NSPopUpButton *)sender {
-    _taskQueue = taskQueues[sender.indexOfSelectedItem];
-}
-
-#pragma mark -
-
-- (void)handleImage:(NSString *)imagePath {
-    NSString *path = _imagePathField.stringValue;
+- (BOOL)loadImage:(NSString *)imagePath {
     
-    NSImage *image = [[NSImage alloc] initWithContentsOfFile:path];
+    NSImage *image = [[NSImage alloc] initWithContentsOfFile:imagePath];
     if (!image) {
-        [[NSAlert alertWithMessageText:@"Invalid image path" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"File '%@' is not a valid image", _imagePathField.stringValue] beginSheetModalForWindow:_window modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+        return NO;
     } else {
         _imgView.image = image;
+        return YES;
     }
+}
+
+- (BOOL)applyFilter:(NSString *)filterName {
+    CGImageRef cgImg = [_imgView.image CGImageForProposedRect:NULL context:NULL hints:NULL];
+    _img = ImageRef(new Image(cgImg));
+    FilterCompletionHandler handler = ^(Filter *filter) {
+        ImageRef img = filter->getResult();
+        CGContextRef context = img->getContext();
+        CGImageRef cgImg = CGBitmapContextCreateImage(context);
+        _imgView.image = [[NSImage alloc] initWithCGImage:cgImg size:NSMakeSize(img->getWidth(), img->getHeight())];
+        [_progressBar stopAnimation:nil];
+        _processing = NO;
+        NSDate *endTime = [NSDate date];
+        NSTimeInterval dt = [endTime timeIntervalSinceDate:_startTime];
+        _timeLabel.stringValue = [NSString stringWithFormat:@"Time Taken: %.2lf seconds", dt];
+        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"n"]) {
+            // run in command line
+            
+            printf("%.2lf", dt);
+            
+            exit(0);    // end
+        }
+    };
+    
+    if ([filterName isEqualToString:@"Grayscale"]) {
+        self.filter = new GrayscaleFilter(_img, _taskQueue, _pixelsPerTask, handler);
+    } else if ([filterName isEqualToString:@"Colorful"]) {
+        self.filter = new ColorfulFilter(_img, _taskQueue, _pixelsPerTask, handler);
+    } else {
+        return NO;
+    }
+    
+    _startTime = [NSDate date];
+    self.filter->apply();
+    return YES;
 }
 
 @end

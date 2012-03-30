@@ -25,4 +25,9 @@
 - (IBAction)filterApply:(NSButton *)sender;
 - (IBAction)changeGranularity:(NSSlider *)sender;
 
+- (void)setTaskQueue:(NSString *)taskQueueName;
+- (void)setGranularity:(int)granularity;
+- (BOOL)loadImage:(NSString *)imagePath;
+- (BOOL)applyFilter:(NSString *)filterName;
+
 @end
