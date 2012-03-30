@@ -11,7 +11,10 @@
 #include <iostream>
 #include <mutex>
 
-ThreadPoolTaskQueue::ThreadPoolTaskQueue() {
+ThreadPoolTaskQueue::ThreadPoolTaskQueue(long threads)
+:NUM_THREADS(threads)
+{
+    _threads = new std::thread * [NUM_THREADS];
     for(int i = 0; i < NUM_THREADS; i++){
         _threads[i] = new std::thread(worker_thread, this);
     }
@@ -23,6 +26,7 @@ ThreadPoolTaskQueue::~ThreadPoolTaskQueue() {
     for(int i = 0; i < NUM_THREADS; i++){
         delete _threads[i];
     }
+    delete[] _threads;
 }
 
 void ThreadPoolTaskQueue::addTask(TaskRef task) {

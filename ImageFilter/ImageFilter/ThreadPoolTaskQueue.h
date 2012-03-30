@@ -20,8 +20,8 @@ void worker_thread(ThreadPoolTaskQueue *queue);
 
 class ThreadPoolTaskQueue : public TaskQueue {
 private:
-    int NUM_THREADS = sysconf(_SC_NPROCESSORS_ONLN);
-    std::thread *_threads[32];
+    long NUM_THREADS;
+    std::thread **_threads;
     std::list<TaskRef> _tasks;
     volatile enum {
         StopThread,
@@ -31,7 +31,8 @@ private:
     friend void worker_thread(ThreadPoolTaskQueue *queue);
     
 public:
-    ThreadPoolTaskQueue();
+    ThreadPoolTaskQueue(): ThreadPoolTaskQueue(sysconf(_SC_NPROCESSORS_ONLN)) {}
+    ThreadPoolTaskQueue(long threads);
     ~ThreadPoolTaskQueue();
     
     void addTask(TaskRef task);
