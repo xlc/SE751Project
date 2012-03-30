@@ -143,16 +143,36 @@ static TaskQueue *taskQueues[3];
     
     CGSize size = _imgView.image.size;
     int area = size.width * size.height;
-    double sliderValue = sender.doubleValue;
-    if (sliderValue == 1.0) {
-        _pixelsPerTask = area;
-    } else if (sliderValue == 0.0) {
-        _pixelsPerTask = 1;
-    } else {
-        int devide = (1 - sliderValue) * 1000;
-        devide = MAX(2, devide);
-        _pixelsPerTask = area/devide;
+    switch(sender.integerValue) {   // 0 to 8
+        case 0:
+            _pixelsPerTask = 1;
+            break;
+        case 1:
+            _pixelsPerTask = 4;
+            break;
+        case 2:
+            _pixelsPerTask = 32;
+            break;
+        case 3:
+            _pixelsPerTask = 128;
+            break;
+        case 4:
+            _pixelsPerTask = sqrtf(area);
+            break;
+        case 5:
+            _pixelsPerTask = area / 128;
+            break;
+        case 6:
+            _pixelsPerTask = area / 32;
+            break;
+        case 7:
+            _pixelsPerTask = area / 4;
+            break;
+        case 8:
+            _pixelsPerTask = area;
+            break;
     }
+    
     _granularityLabel.stringValue = [NSString stringWithFormat:@"Granularity: %dpx", _pixelsPerTask];
 }
 
