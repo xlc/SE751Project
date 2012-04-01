@@ -23,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00DC9324152901360091C7AD /* InvertFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InvertFilter.h; sourceTree = "<group>"; };
+		00DC9326152906870091C7AD /* SepiaFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SepiaFilter.h; sourceTree = "<group>"; };
 		06151618151B115700E585C8 /* GCDTaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDTaskQueue.h; sourceTree = "<group>"; };
 		0615161A151B116300E585C8 /* GCDTaskQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GCDTaskQueue.cpp; sourceTree = "<group>"; };
 		0615161C151B11A100E585C8 /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
@@ -141,12 +143,14 @@
 			isa = PBXGroup;
 			children = (
 				0615161C151B11A100E585C8 /* Filter.h */,
+				00DC9324152901360091C7AD /* InvertFilter.h */,
 				06B7B881151C585000470B72 /* Filter.cpp */,
 				064BC42215245103000697A5 /* ColorfulFilter.h */,
 				06B7B87D151C42E500470B72 /* GrayscaleFilter.h */,
 				06B7B87E151C42F100470B72 /* GrayscaleFilter.cpp */,
 				0615161D151B121C00E585C8 /* Image.h */,
 				06B7B877151B151B00470B72 /* Image.cpp */,
+				00DC9326152906870091C7AD /* SepiaFilter.h */,
 			);
 			name = Filters;
 			sourceTree = "<group>";

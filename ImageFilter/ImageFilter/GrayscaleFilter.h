@@ -13,7 +13,7 @@
 
 class GrayscaleFilter : public Filter {
 protected:
-    virtual void applyFilter(const ImageRef ource, ImageRef arget, size_t x, size_t y);
+    virtual void applyFilter(const ImageRef source, ImageRef target, size_t x, size_t y);
     
 public:
     GrayscaleFilter(ImageRef source, TaskQueue *queue, int ppt, FilterCompletionHandler handler)

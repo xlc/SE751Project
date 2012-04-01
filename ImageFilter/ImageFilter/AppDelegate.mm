@@ -13,6 +13,8 @@
 #import "SequentialTaskQueue.h"
 #import "GrayscaleFilter.h"
 #import "ColorfulFilter.h"
+#import "InvertFilter.h"
+#import "SepiaFilter.h"
 #import "Image.h"
 
 static TaskQueue *taskQueues[3];
@@ -215,6 +217,10 @@ static TaskQueue *taskQueues[3];
         self.filter = new GrayscaleFilter(_img, _taskQueue, _pixelsPerTask, handler);
     } else if ([filterName isEqualToString:@"Colorful"]) {
         self.filter = new ColorfulFilter(_img, _taskQueue, _pixelsPerTask, handler);
+    } else if ([filterName isEqualToString:@"Invert"]){
+        self.filter = new InvertFilter(_img, _taskQueue, _pixelsPerTask, handler);
+    } else if ([filterName isEqualToString:@"Sepia"]){
+        self.filter = new SepiaFilter(_img, _taskQueue, _pixelsPerTask, handler);
     } else {
         return NO;
     }
