@@ -15,6 +15,8 @@
 #import "ColorfulFilter.h"
 #import "InvertFilter.h"
 #import "SepiaFilter.h"
+#import "EdgeFilter.h"
+#import "BlurFilter.h"
 #import "Image.h"
 
 static TaskQueue *taskQueues[3];
@@ -222,6 +224,10 @@ static TaskQueue *taskQueues[3];
         self.filter = new InvertFilter(_img, _taskQueue, _pixelsPerTask, handler);
     } else if ([filterName isEqualToString:@"Sepia"]){
         self.filter = new SepiaFilter(_img, _taskQueue, _pixelsPerTask, handler);
+    } else if ([filterName isEqualToString:@"Edge"]){
+        self.filter = new EdgeFilter(_img, _taskQueue, _pixelsPerTask, handler);
+    } else if ([filterName isEqualToString:@"Blur"]){
+        self.filter = new BlurFilter(_img, _taskQueue, _pixelsPerTask, handler);
     } else {
         return NO;
     }
