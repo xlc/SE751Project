@@ -37,7 +37,7 @@ protected:
     
 public:
     Filter(ImageRef source, TaskQueue *queue, int ppt, FilterCompletionHandler handler);
-    ~Filter();
+    virtual ~Filter();
     
     // apply filter to source image
     void apply();

@@ -12,7 +12,7 @@
 #include <mutex>
 
 ThreadPoolTaskQueue::ThreadPoolTaskQueue(long threads)
-:NUM_THREADS(threads)
+:NUM_THREADS(threads), _action(NoAction)
 {
     _threads = new std::thread * [NUM_THREADS];
     for(int i = 0; i < NUM_THREADS; i++){
@@ -34,8 +34,8 @@ void ThreadPoolTaskQueue::addTask(TaskRef task) {
         LockGuard lk(_mutex);
         _tasks.push_back(task);
         _action = NewTask;
+        _cv.notify_all();
     }
-    _cv.notify_all();
 }
 
 void ThreadPoolTaskQueue::removeTask(TaskRef task) {
@@ -91,6 +91,9 @@ void worker_thread(ThreadPoolTaskQueue *queue) {
                     task->start();
                 }
             }
+                break;
+                
+            case ThreadPoolTaskQueue::NoAction:
                 break;
         }
     }

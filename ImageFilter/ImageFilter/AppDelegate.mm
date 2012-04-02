@@ -198,6 +198,7 @@ static TaskQueue *taskQueues[3];
         CGContextRef context = img->getContext();
         CGImageRef cgImg = CGBitmapContextCreateImage(context);
         _imgView.image = [[NSImage alloc] initWithCGImage:cgImg size:NSMakeSize(img->getWidth(), img->getHeight())];
+        CGImageRelease(cgImg);
         [_progressBar stopAnimation:nil];
         _processing = NO;
         NSDate *endTime = [NSDate date];

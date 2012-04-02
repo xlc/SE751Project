@@ -24,6 +24,7 @@ private:
     std::thread *_thread;
     std::list<TaskRef> _tasks;
     volatile enum {
+        NoAction,
         StopThread,
         NewTask,
     } _action;
