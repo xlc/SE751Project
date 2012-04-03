@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0615161B151B116300E585C8 /* GCDTaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0615161A151B116300E585C8 /* GCDTaskQueue.cpp */; };
+		0684816F152AF80800713416 /* script.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0684816E152AF80800713416 /* script.sh */; };
 		0691C8EB151AEE7F00450DEB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0691C8EA151AEE7F00450DEB /* Cocoa.framework */; };
 		0691C8F5151AEE7F00450DEB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0691C8F3151AEE7F00450DEB /* InfoPlist.strings */; };
 		0691C8F7151AEE7F00450DEB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0691C8F6151AEE7F00450DEB /* main.m */; };
@@ -32,6 +33,7 @@
 		061E24711529B403000E9FD4 /* EdgeFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EdgeFilter.h; sourceTree = "<group>"; };
 		061E24731529BC39000E9FD4 /* BlurFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlurFilter.h; sourceTree = "<group>"; };
 		064BC42215245103000697A5 /* ColorfulFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorfulFilter.h; sourceTree = "<group>"; };
+		0684816E152AF80800713416 /* script.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = script.sh; sourceTree = "<group>"; };
 		0691C8E6151AEE7F00450DEB /* ImageFilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0691C8EA151AEE7F00450DEB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		0691C8ED151AEE7F00450DEB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -111,6 +113,7 @@
 		0691C8F0151AEE7F00450DEB /* ImageFilter */ = {
 			isa = PBXGroup;
 			children = (
+				0684816E152AF80800713416 /* script.sh */,
 				06DC28F2151B0458006B8C8E /* TaskQueue */,
 				06DC28F1151B0448006B8C8E /* Filters */,
 				06DC28EF151B0413006B8C8E /* UI */,
@@ -230,6 +233,7 @@
 				0691C8F5151AEE7F00450DEB /* InfoPlist.strings in Resources */,
 				0691C8FB151AEE7F00450DEB /* Credits.rtf in Resources */,
 				0691C901151AEE7F00450DEB /* MainMenu.xib in Resources */,
+				0684816F152AF80800713416 /* script.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -210,7 +210,7 @@ static TaskQueue *taskQueues[3];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"n"]) {
             // run in command line
             
-            printf("%.2lf", dt);
+            printf("%.2lf\n", dt);
             
             exit(0);    // end
         }

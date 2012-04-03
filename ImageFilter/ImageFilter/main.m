@@ -34,23 +34,30 @@ int main(int argc, char *argv[])
         NSImageView *imgView = [[NSImageView alloc] init];
         app.imgView = imgView;
         
-        [app setTaskQueue:[defaults stringForKey:@"t"]];    // set task queue
+        NSString *taskQueue = [defaults stringForKey:@"t"];
+        [app setTaskQueue:taskQueue];    // set task queue
         
         NSString *input = [defaults stringForKey:@"i"];     // set input image
         if ([app loadImage:input]) {
             
-            [app setGranularity:(int)[defaults integerForKey:@"g"]];    // set granularity
+            int granularity = (int)[defaults integerForKey:@"g"];
+            [app setGranularity:granularity];    // set granularity
             NSString *filterName = [defaults stringForKey:@"f"];
             if ([app applyFilter:filterName]) { // apply filter
+                
+//                printf("Image: %s\n", [input UTF8String]);
+//                printf("TaskQueue: %s\n", [taskQueue UTF8String]);
+//                printf("Granularity: %d\n", granularity);
+//                printf("Filter: %s\n", [filterName UTF8String]);
                 
                 [[NSRunLoop currentRunLoop] run];   // run and wait until finished
                 
             } else {
-                fprintf(stderr, "invalid filter name: '%s'", [filterName UTF8String]);
+                fprintf(stderr, "invalid filter name: '%s'\n", [filterName UTF8String]);
             }
             
         } else {
-            fprintf(stderr, "invalid input path: '%s'", [input UTF8String]);
+            fprintf(stderr, "invalid input path: '%s'\n", [input UTF8String]);
         }
         
         return 0;
