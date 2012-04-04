@@ -16,30 +16,25 @@
 #include "TaskQueue.h"
 class ThreadPerTaskQueue;
 
-void worker_thread(ThreadPerTaskQueue *queue);
+void worker_thread(TaskRef task);
 
 class ThreadPerTaskQueue : public TaskQueue {
 private:
     std::list<std::thread*> _threads;
-    std::list<TaskRef> _tasks;
-    volatile enum {
-        NoAction,
-        StopThread,
-        NewTask,
-    } _action;
     
     friend void worker_thread(ThreadPerTaskQueue *queue);
     
 public:
-    ThreadPerTaskQueue();
+    ThreadPerTaskQueue(){};
     ~ThreadPerTaskQueue();
     
     void addTask(TaskRef task);
-    void removeTask(TaskRef task);
-    void removeAllRemainTasks();
-    std::list<TaskRef> getTasks();
-    unsigned int getTaskCount();
     
+    // unimplemented methods
+    virtual void removeTask(TaskRef task) { throw std::exception(); }
+    virtual void removeAllRemainTasks() { throw std::exception(); }
+    virtual std::list<TaskRef> getTasks() { throw std::exception(); }
+    virtual unsigned int getTaskCount() { throw std::exception(); }
 };
 
 
