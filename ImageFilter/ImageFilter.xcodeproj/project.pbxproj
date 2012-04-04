@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00DC9332152C37D70091C7AD /* ThreadPerTaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00DC9331152C37D70091C7AD /* ThreadPerTaskQueue.cpp */; };
 		0615161B151B116300E585C8 /* GCDTaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0615161A151B116300E585C8 /* GCDTaskQueue.cpp */; };
 		0684816F152AF80800713416 /* script.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0684816E152AF80800713416 /* script.sh */; };
 		0691C8EB151AEE7F00450DEB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0691C8EA151AEE7F00450DEB /* Cocoa.framework */; };
@@ -26,6 +27,8 @@
 /* Begin PBXFileReference section */
 		00DC9324152901360091C7AD /* InvertFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InvertFilter.h; sourceTree = "<group>"; };
 		00DC9326152906870091C7AD /* SepiaFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SepiaFilter.h; sourceTree = "<group>"; };
+		00DC932F152C36E20091C7AD /* ThreadPerTaskQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThreadPerTaskQueue.h; sourceTree = "<group>"; };
+		00DC9331152C37D70091C7AD /* ThreadPerTaskQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadPerTaskQueue.cpp; sourceTree = "<group>"; };
 		06151618151B115700E585C8 /* GCDTaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDTaskQueue.h; sourceTree = "<group>"; };
 		0615161A151B116300E585C8 /* GCDTaskQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GCDTaskQueue.cpp; sourceTree = "<group>"; };
 		0615161C151B11A100E585C8 /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
@@ -175,7 +178,9 @@
 				0615161A151B116300E585C8 /* GCDTaskQueue.cpp */,
 				06B7B889151D57D600470B72 /* ThreadPoolTaskQueue.h */,
 				06B7B88A151D57E500470B72 /* ThreadPoolTaskQueue.cpp */,
+				00DC9331152C37D70091C7AD /* ThreadPerTaskQueue.cpp */,
 				06B7B89015219C6F00470B72 /* Atomic.h */,
+				00DC932F152C36E20091C7AD /* ThreadPerTaskQueue.h */,
 			);
 			name = TaskQueue;
 			sourceTree = "<group>";
@@ -253,6 +258,7 @@
 				06B7B87F151C42F100470B72 /* GrayscaleFilter.cpp in Sources */,
 				06B7B882151C585000470B72 /* Filter.cpp in Sources */,
 				06B7B88B151D57E600470B72 /* ThreadPoolTaskQueue.cpp in Sources */,
+				00DC9332152C37D70091C7AD /* ThreadPerTaskQueue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

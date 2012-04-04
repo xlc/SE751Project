@@ -11,6 +11,8 @@
 #import "GCDTaskQueue.h"
 #import "ThreadPoolTaskQueue.h"
 #import "SequentialTaskQueue.h"
+#import "ThreadPerTaskQueue.h"
+
 #import "GrayscaleFilter.h"
 #import "ColorfulFilter.h"
 #import "InvertFilter.h"
@@ -19,7 +21,7 @@
 #import "BlurFilter.h"
 #import "Image.h"
 
-static TaskQueue *taskQueues[3];
+static TaskQueue *taskQueues[4];
 
 @interface AppDelegate ()
 
@@ -69,9 +71,9 @@ static TaskQueue *taskQueues[3];
     
     // create task queues
     taskQueues[0] = new GCDTaskQueue();
-    //taskQueues[1] = new SequentialTaskQueue();
     taskQueues[1] = new ThreadPoolTaskQueue();
     taskQueues[2] = new SequentialTaskQueue();
+    taskQueues[3] = new ThreadPerTaskQueue();
     
     // set default task queue
     _taskQueue = taskQueues[0];
@@ -141,6 +143,8 @@ static TaskQueue *taskQueues[3];
         _taskQueue = taskQueues[1];
     } else if ([taskQueueName isEqualToString:@"SequentialTaskQueue"]) {
         _taskQueue = taskQueues[2];
+    } else if ([taskQueueName isEqualToString:@"ThreadPerTaskQueue"]) {
+        _taskQueue = taskQueues[3];
     }
 }
 
