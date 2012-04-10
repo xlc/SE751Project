@@ -12,6 +12,8 @@
 #include <iostream>
 #include <mutex>
 
+void worker_thread(TaskRef task);
+
 ThreadPerTaskQueue::~ThreadPerTaskQueue() {
     std::list<std::thread*>::iterator threadIt;
     std::thread *thread;
@@ -23,11 +25,9 @@ ThreadPerTaskQueue::~ThreadPerTaskQueue() {
 }
 
 void ThreadPerTaskQueue::addTask(TaskRef task) {
-    {
-        LockGuard lk(_mutex);
-        std::thread *thread = new std::thread(worker_thread, task);
-        _threads.push_back(thread);
-    }
+    LockGuard lk(_mutex);
+    std::thread *thread = new std::thread(worker_thread, task);
+    _threads.push_back(thread);
 }
 
 void worker_thread(TaskRef task) {

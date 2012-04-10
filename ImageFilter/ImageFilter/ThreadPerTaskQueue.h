@@ -16,13 +16,9 @@
 #include "TaskQueue.h"
 class ThreadPerTaskQueue;
 
-void worker_thread(TaskRef task);
-
 class ThreadPerTaskQueue : public TaskQueue {
 private:
     std::list<std::thread*> _threads;
-    
-    friend void worker_thread(ThreadPerTaskQueue *queue);
     
 public:
     ThreadPerTaskQueue(){};

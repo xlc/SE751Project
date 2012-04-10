@@ -178,9 +178,9 @@
 				0615161A151B116300E585C8 /* GCDTaskQueue.cpp */,
 				06B7B889151D57D600470B72 /* ThreadPoolTaskQueue.h */,
 				06B7B88A151D57E500470B72 /* ThreadPoolTaskQueue.cpp */,
+				00DC932F152C36E20091C7AD /* ThreadPerTaskQueue.h */,
 				00DC9331152C37D70091C7AD /* ThreadPerTaskQueue.cpp */,
 				06B7B89015219C6F00470B72 /* Atomic.h */,
-				00DC932F152C36E20091C7AD /* ThreadPerTaskQueue.h */,
 			);
 			name = TaskQueue;
 			sourceTree = "<group>";

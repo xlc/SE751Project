@@ -85,7 +85,13 @@ static TaskQueue *taskQueues[4];
 
 - (IBAction)openImage:(id)sender {
     if (![self loadImage:_imagePathField.stringValue]) {
-        [[NSAlert alertWithMessageText:@"Invalid image path" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"File '%@' is not a valid image", _imagePathField.stringValue] beginSheetModalForWindow:_window modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+        [[NSAlert alertWithMessageText:@"Invalid image path"
+                         defaultButton:@"OK"
+                       alternateButton:nil
+                           otherButton:nil
+             informativeTextWithFormat:@"File '%@' is not a valid image", _imagePathField.stringValue]
+         beginSheetModalForWindow:_window modalDelegate:nil
+         didEndSelector:NULL contextInfo:NULL];
     }
 }
 
