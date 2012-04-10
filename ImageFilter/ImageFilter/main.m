@@ -50,6 +50,9 @@ int main(int argc, char *argv[])
 //                printf("Granularity: %d\n", granularity);
 //                printf("Filter: %s\n", [filterName UTF8String]);
                 
+                NSTimeInterval d = [defaults integerForKey:@"d"];
+                if (d != 0)
+                    [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSince1970:d]];
                 [[NSRunLoop currentRunLoop] run];   // run and wait until finished
                 
             } else {
