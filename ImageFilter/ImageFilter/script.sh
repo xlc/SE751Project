@@ -11,7 +11,8 @@ do
     echo "running on $queue..."
     rm $queue.txt > /dev/null 2>&1
     d=`date +%s`
-    d+=2    # start after 2 seconds
+    d=$(($d+2))    # start after 2 seconds
+    echo $d
     for i in $(seq 1 $processes)
     do
         ./ImageFilter -n YES -t $queue -i $imageFile -g 3 -f Grayscale -d $d >> $queue.txt &

@@ -43,6 +43,14 @@ int main(int argc, char *argv[])
             int granularity = (int)[defaults integerForKey:@"g"];
             [app setGranularity:granularity];    // set granularity
             NSString *filterName = [defaults stringForKey:@"f"];
+            
+            NSTimeInterval d = [defaults integerForKey:@"d"];
+            if (d != 0) {
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:d];
+                [NSThread sleepUntilDate:date];
+            }
+                
+            
             if ([app applyFilter:filterName]) { // apply filter
                 
 //                printf("Image: %s\n", [input UTF8String]);
@@ -50,9 +58,6 @@ int main(int argc, char *argv[])
 //                printf("Granularity: %d\n", granularity);
 //                printf("Filter: %s\n", [filterName UTF8String]);
                 
-                NSTimeInterval d = [defaults integerForKey:@"d"];
-                if (d != 0)
-                    [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSince1970:d]];
                 [[NSRunLoop currentRunLoop] run];   // run and wait until finished
                 
             } else {
