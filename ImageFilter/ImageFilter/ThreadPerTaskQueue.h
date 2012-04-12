@@ -17,12 +17,9 @@
 class ThreadPerTaskQueue;
 
 class ThreadPerTaskQueue : public TaskQueue {
-private:
-    std::list<std::thread*> _threads;
     
 public:
     ThreadPerTaskQueue(){};
-    ~ThreadPerTaskQueue();
     
     void addTask(TaskRef task);
     

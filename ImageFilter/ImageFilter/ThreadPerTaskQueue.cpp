@@ -14,20 +14,10 @@
 
 void worker_thread(TaskRef task);
 
-ThreadPerTaskQueue::~ThreadPerTaskQueue() {
-    std::list<std::thread*>::iterator threadIt;
-    std::thread *thread;
-    for(threadIt = _threads.begin(); threadIt!= _threads.end(); threadIt++){
-        thread = *threadIt;
-        _threads.erase(threadIt);
-        delete thread;
-    }
-}
-
 void ThreadPerTaskQueue::addTask(TaskRef task) {
     LockGuard lk(_mutex);
-    std::thread *thread = new std::thread(worker_thread, task);
-    _threads.push_back(thread);
+    std::thread t (worker_thread, task);
+    t.detach();
 }
 
 void worker_thread(TaskRef task) {
