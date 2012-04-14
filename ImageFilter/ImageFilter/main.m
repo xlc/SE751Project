@@ -18,6 +18,8 @@
  * f/filter:        filter name to specify which filter should used
  * g/granularity:   level of granularity / how many task should be created
  *                  number from 1 - 9, 1 means a task per pixel, 9 means only one task
+ * ts/tasks:        control how many tasks, override granularity
+ *                  tasks = 2 ^ ts
  * t/taskqueue:     name of taskqueue should used, default GCDTaskQueue
  */
 int main(int argc, char *argv[])
@@ -42,6 +44,11 @@ int main(int argc, char *argv[])
             
             int granularity = (int)[defaults integerForKey:@"g"];
             [app setGranularity:granularity];    // set granularity
+            if ([defaults objectForKey:@"ts"] != nil) {
+                int count = [defaults integerForKey:@"ts"];
+                count = 1 << count; // pow(2, count);
+                [app setTaskCount:count];
+            }
             NSString *filterName = [defaults stringForKey:@"f"];
             
             NSTimeInterval d = [defaults integerForKey:@"d"];

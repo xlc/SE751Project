@@ -27,6 +27,7 @@
 
 - (void)setTaskQueue:(NSString *)taskQueueName;
 - (void)setGranularity:(int)granularity;
+- (void)setTaskCount:(int)count;
 - (BOOL)loadImage:(NSString *)imagePath;
 - (BOOL)applyFilter:(NSString *)filterName;
 

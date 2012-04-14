@@ -191,6 +191,12 @@ static TaskQueue *taskQueues[4];
     }
 }
 
+- (void)setTaskCount:(int)count {
+    CGSize size = _imgView.image.size;
+    int area = size.width * size.height;
+    _pixelsPerTask = area / count;
+}
+
 - (BOOL)loadImage:(NSString *)imagePath {
     
     NSImage *image = [[NSImage alloc] initWithContentsOfFile:imagePath];
@@ -220,7 +226,7 @@ static TaskQueue *taskQueues[4];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"n"]) {
             // run in command line
             
-            printf("%.2lf\n", dt);
+            printf("%.4lf\n", dt);
             
             exit(0);    // end
         }
