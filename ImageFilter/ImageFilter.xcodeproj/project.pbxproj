@@ -21,6 +21,9 @@
 		06B7B87F151C42F100470B72 /* GrayscaleFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06B7B87E151C42F100470B72 /* GrayscaleFilter.cpp */; };
 		06B7B882151C585000470B72 /* Filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06B7B881151C585000470B72 /* Filter.cpp */; };
 		06B7B88B151D57E600470B72 /* ThreadPoolTaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06B7B88A151D57E500470B72 /* ThreadPoolTaskQueue.cpp */; };
+		06D2E19E15399B7900D2BC7F /* edge.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = 06D2E19D15399B7900D2BC7F /* edge.cikernel */; };
+		06D2E1A515399F9A00D2BC7F /* CIEdgeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 06D2E1A415399F9A00D2BC7F /* CIEdgeFilter.m */; };
+		06D2E1A815399FBB00D2BC7F /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06D2E1A715399FBB00D2BC7F /* Quartz.framework */; };
 		06DC28F8151B05CD006B8C8E /* Task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06DC28F7151B05CD006B8C8E /* Task.cpp */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +63,10 @@
 		06B7B889151D57D600470B72 /* ThreadPoolTaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadPoolTaskQueue.h; sourceTree = "<group>"; };
 		06B7B88A151D57E500470B72 /* ThreadPoolTaskQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadPoolTaskQueue.cpp; sourceTree = "<group>"; };
 		06B7B89015219C6F00470B72 /* Atomic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Atomic.h; sourceTree = "<group>"; };
+		06D2E19D15399B7900D2BC7F /* edge.cikernel */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = edge.cikernel; sourceTree = "<group>"; };
+		06D2E1A315399F9A00D2BC7F /* CIEdgeFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIEdgeFilter.h; sourceTree = "<group>"; };
+		06D2E1A415399F9A00D2BC7F /* CIEdgeFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CIEdgeFilter.m; sourceTree = "<group>"; };
+		06D2E1A715399FBB00D2BC7F /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		06DC28F5151B048D006B8C8E /* TaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskQueue.h; sourceTree = "<group>"; };
 		06DC28F6151B04CF006B8C8E /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		06DC28F7151B05CD006B8C8E /* Task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Task.cpp; sourceTree = "<group>"; };
@@ -70,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06D2E1A815399FBB00D2BC7F /* Quartz.framework in Frameworks */,
 				0691C8EB151AEE7F00450DEB /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -97,6 +105,7 @@
 		0691C8E9151AEE7F00450DEB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				06D2E1A715399FBB00D2BC7F /* Quartz.framework */,
 				0691C8EA151AEE7F00450DEB /* Cocoa.framework */,
 				0691C8EC151AEE7F00450DEB /* Other Frameworks */,
 			);
@@ -119,6 +128,7 @@
 				0684816E152AF80800713416 /* script.sh */,
 				06DC28F2151B0458006B8C8E /* TaskQueue */,
 				06DC28F1151B0448006B8C8E /* Filters */,
+				06D2E19B15399B3900D2BC7F /* CoreImage */,
 				06DC28EF151B0413006B8C8E /* UI */,
 				0691C8F6151AEE7F00450DEB /* main.m */,
 				0691C8F1151AEE7F00450DEB /* Supporting Files */,
@@ -135,6 +145,16 @@
 				0691C8F9151AEE7F00450DEB /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		06D2E19B15399B3900D2BC7F /* CoreImage */ = {
+			isa = PBXGroup;
+			children = (
+				06D2E19D15399B7900D2BC7F /* edge.cikernel */,
+				06D2E1A315399F9A00D2BC7F /* CIEdgeFilter.h */,
+				06D2E1A415399F9A00D2BC7F /* CIEdgeFilter.m */,
+			);
+			name = CoreImage;
 			sourceTree = "<group>";
 		};
 		06DC28EF151B0413006B8C8E /* UI */ = {
@@ -239,6 +259,7 @@
 				0691C8FB151AEE7F00450DEB /* Credits.rtf in Resources */,
 				0691C901151AEE7F00450DEB /* MainMenu.xib in Resources */,
 				0684816F152AF80800713416 /* script.sh in Resources */,
+				06D2E19E15399B7900D2BC7F /* edge.cikernel in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +280,7 @@
 				06B7B882151C585000470B72 /* Filter.cpp in Sources */,
 				06B7B88B151D57E600470B72 /* ThreadPoolTaskQueue.cpp in Sources */,
 				00DC9332152C37D70091C7AD /* ThreadPerTaskQueue.cpp in Sources */,
+				06D2E1A515399F9A00D2BC7F /* CIEdgeFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

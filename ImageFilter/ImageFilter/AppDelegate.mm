@@ -20,6 +20,7 @@
 #import "EdgeFilter.h"
 #import "BlurFilter.h"
 #import "Image.h"
+#import "CIEdgeFilter.h"
 
 static TaskQueue *taskQueues[4];
 
@@ -138,6 +139,21 @@ static TaskQueue *taskQueues[4];
 
 - (IBAction)changeTaskQueue:(NSPopUpButton *)sender {
     _taskQueue = taskQueues[sender.indexOfSelectedItem];
+}
+
+- (IBAction)GPUFilter:(id)sender {
+    if (!_imgView.image)    // do nothing when no image loaded
+        return;
+    _startTime = [NSDate date];
+    CIEdgeFilter *filter = [[CIEdgeFilter alloc] init];
+    CIImage *ciImg = [CIImage imageWithCGImage:[_imgView.image CGImageForProposedRect:NULL context:NULL hints:NULL]];
+    [filter setValue:ciImg forKey:@"inputImage"];
+    CIImage *result = [filter valueForKey:@"outputImage"];
+    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithCIImage:result];
+    _imgView.image = [[NSImage alloc] initWithCGImage:rep.CGImage size:rep.size];
+    NSDate *endTime = [NSDate date];
+    NSTimeInterval dt = [endTime timeIntervalSinceDate:_startTime];
+    _timeLabel.stringValue = [NSString stringWithFormat:@"Time Taken: %.2lf seconds", dt];
 }
 
 #pragma mark -

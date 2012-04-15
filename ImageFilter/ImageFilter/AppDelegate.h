@@ -24,6 +24,7 @@
 - (IBAction)changeTaskQueue:(NSPopUpButton *)sender;
 - (IBAction)filterApply:(NSButton *)sender;
 - (IBAction)changeGranularity:(NSSlider *)sender;
+- (IBAction)GPUFilter:(id)sender;
 
 - (void)setTaskQueue:(NSString *)taskQueueName;
 - (void)setGranularity:(int)granularity;

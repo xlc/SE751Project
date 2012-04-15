@@ -1,0 +1,16 @@
+kernel vec4 edge(sampler src)
+{
+    vec2 coord = samplerCoord(src);
+    vec4 p = sample(src, coord);
+    float diff = 0.0;
+    for (float i = -1.0; i < 1.0; i++) {
+        for (float j = -1.0; j < 1.0; j++) {
+            const vec4 p2 = sample(src, vec2(coord.x+i, coord.y+j));
+            for (int k = 0; k < 3; k++) {
+                diff += abs(p[k] - p2[k]);
+            }
+        }
+    }
+    p[0] = p[1] = p[2] = compare(diff - 1.0/3.0, 1.0, 0.0);
+    return p;
+}
