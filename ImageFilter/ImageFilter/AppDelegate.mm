@@ -6,7 +6,11 @@
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
+#include <sys/time.h>
+
 #import "AppDelegate.h"
+
+#import "time.h"
 
 #import "GCDTaskQueue.h"
 #import "ThreadPoolTaskQueue.h"
@@ -34,7 +38,6 @@ static TaskQueue *taskQueues[4];
     TaskQueue * _taskQueue;
     BOOL _processing;
     ImageRef _img;
-    NSDate *_startTime;
     int _pixelsPerTask;
 }
 
@@ -144,16 +147,15 @@ static TaskQueue *taskQueues[4];
 - (IBAction)GPUFilter:(id)sender {
     if (!_imgView.image)    // do nothing when no image loaded
         return;
-    _startTime = [NSDate date];
+    init_time();
     CIEdgeFilter *filter = [[CIEdgeFilter alloc] init];
     CIImage *ciImg = [CIImage imageWithCGImage:[_imgView.image CGImageForProposedRect:NULL context:NULL hints:NULL]];
     [filter setValue:ciImg forKey:@"inputImage"];
     CIImage *result = [filter valueForKey:@"outputImage"];
     NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithCIImage:result];
     _imgView.image = [[NSImage alloc] initWithCGImage:rep.CGImage size:rep.size];
-    NSDate *endTime = [NSDate date];
-    NSTimeInterval dt = [endTime timeIntervalSinceDate:_startTime];
-    _timeLabel.stringValue = [NSString stringWithFormat:@"Time Taken: %.2lf seconds", dt];
+    stop_time();
+    _timeLabel.stringValue = [NSString stringWithFormat:@"Time Taken: %.2lf seconds", get_time_diff()];
 }
 
 #pragma mark -
@@ -235,8 +237,8 @@ static TaskQueue *taskQueues[4];
         CGImageRelease(cgImg);
         [_progressBar stopAnimation:nil];
         _processing = NO;
-        NSDate *endTime = [NSDate date];
-        NSTimeInterval dt = [endTime timeIntervalSinceDate:_startTime];
+        stop_time();
+        double dt = get_time_diff();
         _timeLabel.stringValue = [NSString stringWithFormat:@"Time Taken: %.2lf seconds", dt];
         
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"n"]) {
@@ -264,9 +266,24 @@ static TaskQueue *taskQueues[4];
         return NO;
     }
     
-    _startTime = [NSDate date];
+
     self.filter->apply();
     return YES;
 }
 
 @end
+
+static struct timeval start_time;
+static struct timeval end_time;
+
+void init_time() {
+    gettimeofday(&start_time, NULL);
+}
+
+void stop_time() {
+    gettimeofday(&end_time, NULL);
+}
+
+double get_time_diff() {
+    return (end_time.tv_sec - start_time.tv_sec) + (end_time.tv_usec - start_time.tv_usec) / 1000000.0;
+}

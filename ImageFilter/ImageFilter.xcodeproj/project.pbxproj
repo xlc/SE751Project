@@ -53,6 +53,7 @@
 		0691C8FC151AEE7F00450DEB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0691C8FD151AEE7F00450DEB /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		0691C900151AEE7F00450DEB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		06B753541550F9CF00AFC596 /* time.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = time.h; sourceTree = "<group>"; };
 		06B7B877151B151B00470B72 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Image.cpp; sourceTree = "<group>"; };
 		06B7B87A151B1FE900470B72 /* SequentialTaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequentialTaskQueue.h; sourceTree = "<group>"; };
 		06B7B87B151B1FF800470B72 /* SequentialTaskQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SequentialTaskQueue.cpp; sourceTree = "<group>"; };
@@ -131,6 +132,7 @@
 				06D2E19B15399B3900D2BC7F /* CoreImage */,
 				06DC28EF151B0413006B8C8E /* UI */,
 				0691C8F6151AEE7F00450DEB /* main.m */,
+				06B753541550F9CF00AFC596 /* time.h */,
 				0691C8F1151AEE7F00450DEB /* Supporting Files */,
 			);
 			path = ImageFilter;

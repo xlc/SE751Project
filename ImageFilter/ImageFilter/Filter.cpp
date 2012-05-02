@@ -16,6 +16,7 @@
 #include "Image.h"
 #include "BlockTask.h"
 #include "Atomic.h"
+#include "time.h"
 
 class FilterTask : public Task {
     Filter *_filter;
@@ -82,6 +83,7 @@ void Filter::apply() {
             group->addTask(task);
         }
         
+        init_time();
         _taskQueue->addTaskGroup(group);
     }));
     

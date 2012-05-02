@@ -15,31 +15,19 @@
 
 #include "TaskQueue.h"
 
-class SequentialTaskQueue;
-
-void worker_thread(SequentialTaskQueue *queue);
-
 class SequentialTaskQueue : public TaskQueue {
-private:
-    std::thread *_thread;
-    std::list<TaskRef> _tasks;
-    volatile enum {
-        NoAction,
-        StopThread,
-        NewTask,
-    } _action;
-    
-    friend void worker_thread(SequentialTaskQueue *queue);
     
 public:
-    SequentialTaskQueue();
-    ~SequentialTaskQueue();
+    SequentialTaskQueue() {}
+    ~SequentialTaskQueue() {}
     
     void addTask(TaskRef task);
-    void removeTask(TaskRef task);
-    void removeAllRemainTasks();
-    std::list<TaskRef> getTasks();
-    unsigned int getTaskCount();
+    
+    // unimplemented methods
+    virtual void removeTask(TaskRef task) { throw std::exception(); }
+    virtual void removeAllRemainTasks() { throw std::exception(); }
+    virtual std::list<TaskRef> getTasks() { throw std::exception(); }
+    virtual unsigned int getTaskCount() { throw std::exception(); }
 };
 
 #endif
