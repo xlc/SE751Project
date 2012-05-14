@@ -25,8 +25,8 @@ protected:
         const int RANGE = 10;
         for (int i = -RANGE; i < RANGE; i++) {
             for (int j = -RANGE; j < RANGE; j++) {
-                int x1 = x + i;
-                int y1 = y + j;
+                long x1 = x + i;
+                long y1 = y + j;
                 if (x1 < 0 || x1 >= w)
                     continue;
                 if (y1 < 0 || y1 >= h)

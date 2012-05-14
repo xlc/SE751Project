@@ -38,31 +38,6 @@ void ThreadPoolTaskQueue::addTask(TaskRef task) {
     }
 }
 
-void ThreadPoolTaskQueue::removeTask(TaskRef task) {
-    LockGuard lk(_mutex);
-    std::list<TaskRef>::iterator it;
-    for (it = _tasks.begin(); it != _tasks.end(); it++) {
-        if (*it == task) {
-            _tasks.erase(it);
-            break;
-        }
-    }
-}
-
-void ThreadPoolTaskQueue::removeAllRemainTasks() {
-    LockGuard lk(_mutex);
-    _tasks = std::list<TaskRef>();
-}
-
-std::list<TaskRef> ThreadPoolTaskQueue::getTasks() {
-    return _tasks;
-}
-
-unsigned int ThreadPoolTaskQueue::getTaskCount() {
-    LockGuard lk(_mutex);
-    return (unsigned int)_tasks.size();
-}
-
 void worker_thread(ThreadPoolTaskQueue *queue) {
     TaskRef task = nullptr;
     for (;;) {  // run loop

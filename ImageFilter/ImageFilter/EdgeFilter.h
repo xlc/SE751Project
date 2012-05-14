@@ -21,8 +21,8 @@ protected:
         int diff = 0;
         for (int i = -1; i < 1; i++) {
             for (int j = -1; j < 1; j++) {
-                int x1 = x + i;
-                int y1 = y + j;
+                long x1 = x + i;
+                long y1 = y + j;
                 if (x1 < 0 || x1 >= w || y1 < 0 || y1 >= h)
                     continue;
                 Pixel p2 = source->getPixel(x1, y1);

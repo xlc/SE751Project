@@ -27,8 +27,10 @@
 - (IBAction)GPUFilter:(id)sender;
 
 - (void)setTaskQueue:(NSString *)taskQueueName;
-- (void)setGranularity:(int)granularity;
-- (void)setTaskCount:(int)count;
+- (void)setGranularity:(NSInteger)granularity;
+- (void)setTaskCount:(NSInteger)count;
+- (void)setThreadpoolSize:(NSInteger)size;
+- (void)setGCDPriority:(dispatch_queue_priority_t)priority;
 - (BOOL)loadImage:(NSString *)imagePath;
 - (BOOL)applyFilter:(NSString *)filterName;
 

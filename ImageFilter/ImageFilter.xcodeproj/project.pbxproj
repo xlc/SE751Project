@@ -18,7 +18,6 @@
 		0691C901151AEE7F00450DEB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0691C8FF151AEE7F00450DEB /* MainMenu.xib */; };
 		06B7B878151B151B00470B72 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06B7B877151B151B00470B72 /* Image.cpp */; };
 		06B7B87C151B1FF800470B72 /* SequentialTaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06B7B87B151B1FF800470B72 /* SequentialTaskQueue.cpp */; };
-		06B7B87F151C42F100470B72 /* GrayscaleFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06B7B87E151C42F100470B72 /* GrayscaleFilter.cpp */; };
 		06B7B882151C585000470B72 /* Filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06B7B881151C585000470B72 /* Filter.cpp */; };
 		06B7B88B151D57E600470B72 /* ThreadPoolTaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06B7B88A151D57E500470B72 /* ThreadPoolTaskQueue.cpp */; };
 		06D2E19E15399B7900D2BC7F /* edge.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = 06D2E19D15399B7900D2BC7F /* edge.cikernel */; };
@@ -58,7 +57,6 @@
 		06B7B87A151B1FE900470B72 /* SequentialTaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequentialTaskQueue.h; sourceTree = "<group>"; };
 		06B7B87B151B1FF800470B72 /* SequentialTaskQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SequentialTaskQueue.cpp; sourceTree = "<group>"; };
 		06B7B87D151C42E500470B72 /* GrayscaleFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrayscaleFilter.h; sourceTree = "<group>"; };
-		06B7B87E151C42F100470B72 /* GrayscaleFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GrayscaleFilter.cpp; sourceTree = "<group>"; };
 		06B7B881151C585000470B72 /* Filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Filter.cpp; sourceTree = "<group>"; };
 		06B7B887151C970D00470B72 /* BlockTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockTask.h; sourceTree = "<group>"; };
 		06B7B889151D57D600470B72 /* ThreadPoolTaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadPoolTaskQueue.h; sourceTree = "<group>"; };
@@ -176,7 +174,6 @@
 				06B7B881151C585000470B72 /* Filter.cpp */,
 				064BC42215245103000697A5 /* ColorfulFilter.h */,
 				06B7B87D151C42E500470B72 /* GrayscaleFilter.h */,
-				06B7B87E151C42F100470B72 /* GrayscaleFilter.cpp */,
 				00DC9324152901360091C7AD /* InvertFilter.h */,
 				00DC9326152906870091C7AD /* SepiaFilter.h */,
 				061E24711529B403000E9FD4 /* EdgeFilter.h */,
@@ -278,7 +275,6 @@
 				0615161B151B116300E585C8 /* GCDTaskQueue.cpp in Sources */,
 				06B7B878151B151B00470B72 /* Image.cpp in Sources */,
 				06B7B87C151B1FF800470B72 /* SequentialTaskQueue.cpp in Sources */,
-				06B7B87F151C42F100470B72 /* GrayscaleFilter.cpp in Sources */,
 				06B7B882151C585000470B72 /* Filter.cpp in Sources */,
 				06B7B88B151D57E600470B72 /* ThreadPoolTaskQueue.cpp in Sources */,
 				00DC9332152C37D70091C7AD /* ThreadPerTaskQueue.cpp in Sources */,

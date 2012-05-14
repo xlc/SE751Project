@@ -24,5 +24,4 @@ void worker_thread(TaskRef task) {
     if (task) {
         task->start();
     }
-    
 }

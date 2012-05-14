@@ -39,6 +39,8 @@ static TaskQueue *taskQueues[4];
     BOOL _processing;
     ImageRef _img;
     int _pixelsPerTask;
+    NSInteger _threadpoolSize;
+    dispatch_queue_priority_t _GCDPriority;
 }
 
 @synthesize window = _window;
@@ -67,6 +69,14 @@ static TaskQueue *taskQueues[4];
     _filter = filter;
 }
 
+- (void)setThreadpoolSize:(NSInteger)size {
+    _threadpoolSize = size;
+}
+
+- (void)setGCDPriority:(dispatch_queue_priority_t)priority {
+    _GCDPriority = priority;
+}
+
 #pragma mark - NSApplicationDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -74,8 +84,8 @@ static TaskQueue *taskQueues[4];
     [_drawer open];
     
     // create task queues
-    taskQueues[0] = new GCDTaskQueue();
-    taskQueues[1] = new ThreadPoolTaskQueue();
+    taskQueues[0] = new GCDTaskQueue(_GCDPriority);
+    taskQueues[1] = new ThreadPoolTaskQueue(_threadpoolSize);
     taskQueues[2] = new SequentialTaskQueue();
     taskQueues[3] = new ThreadPerTaskQueue();
     
@@ -172,7 +182,7 @@ static TaskQueue *taskQueues[4];
     }
 }
 
-- (void)setGranularity:(int)granularity {
+- (void)setGranularity:(NSInteger)granularity {
     if (!_imgView.image)    // do nothing when no image loaded
         return;
     
@@ -209,7 +219,7 @@ static TaskQueue *taskQueues[4];
     }
 }
 
-- (void)setTaskCount:(int)count {
+- (void)setTaskCount:(NSInteger)count {
     CGSize size = _imgView.image.size;
     int area = size.width * size.height;
     _pixelsPerTask = area / count;

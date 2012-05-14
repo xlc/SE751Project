@@ -37,10 +37,6 @@ public:
     ~ThreadPoolTaskQueue();
     
     void addTask(TaskRef task);
-    void removeTask(TaskRef task);
-    void removeAllRemainTasks();
-    std::list<TaskRef> getTasks();
-    unsigned int getTaskCount();
     
 };
 

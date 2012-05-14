@@ -22,12 +22,6 @@ public:
     ThreadPerTaskQueue(){};
     
     void addTask(TaskRef task);
-    
-    // unimplemented methods
-    virtual void removeTask(TaskRef task) { throw std::exception(); }
-    virtual void removeAllRemainTasks() { throw std::exception(); }
-    virtual std::list<TaskRef> getTasks() { throw std::exception(); }
-    virtual unsigned int getTaskCount() { throw std::exception(); }
 };
 
 

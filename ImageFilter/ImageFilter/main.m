@@ -21,6 +21,8 @@
  * ts/tasks:        control how many tasks, override granularity
  *                  tasks = 2 ^ ts
  * t/taskqueue:     name of taskqueue should used, default GCDTaskQueue
+ * tp/threadpool size: size of thread pool queue
+ * p/GCD priority:  priority of GCD task queue, 1 - background, 2 - default, 3 - high
  */
 int main(int argc, char *argv[])
 {
@@ -32,6 +34,28 @@ int main(int argc, char *argv[])
     if (no_gui) {
         
         AppDelegate *app = [[AppDelegate alloc] init];
+        
+        long threadpoolSize = [defaults integerForKey:@"tp"];
+        if (threadpoolSize == 0) {
+            threadpoolSize = sysconf(_SC_NPROCESSORS_ONLN);
+        }
+        NSInteger priority = [defaults integerForKey:@"p"];
+        switch (priority) {
+            case 0:
+            case 2:
+                [app setGCDPriority:DISPATCH_QUEUE_PRIORITY_DEFAULT];
+                break;
+            case 1:
+                [app setGCDPriority:DISPATCH_QUEUE_PRIORITY_BACKGROUND];
+                break;
+            case 3:
+                [app setGCDPriority:DISPATCH_QUEUE_PRIORITY_HIGH];
+                break;
+                
+            default:
+                break;
+        }
+        
         [app applicationDidFinishLaunching:nil];   // initialize app
         NSImageView *imgView = [[NSImageView alloc] init];
         app.imgView = imgView;
@@ -42,10 +66,10 @@ int main(int argc, char *argv[])
         NSString *input = [defaults stringForKey:@"i"];     // set input image
         if ([app loadImage:input]) {
             
-            int granularity = (int)[defaults integerForKey:@"g"];
+            NSInteger granularity = [defaults integerForKey:@"g"];
             [app setGranularity:granularity];    // set granularity
             if ([defaults objectForKey:@"ts"] != nil) {
-                int count = [defaults integerForKey:@"ts"];
+                NSInteger count = [defaults integerForKey:@"ts"];
                 count = 1 << count; // pow(2, count);
                 [app setTaskCount:count];
             }

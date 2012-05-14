@@ -20,18 +20,13 @@ private:
     
 public:
     
-    GCDTaskQueue() {
-        // simply use high priority queue to save work
-        _queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+    GCDTaskQueue():GCDTaskQueue(DISPATCH_QUEUE_PRIORITY_HIGH) {}
+    
+    GCDTaskQueue(dispatch_queue_priority_t p) {
+        _queue = dispatch_get_global_queue(p, 0);
     }
     
     void addTask(TaskRef task);
-    
-    // unimplemented methods
-    virtual void removeTask(TaskRef task) { throw std::exception(); }
-    virtual void removeAllRemainTasks() { throw std::exception(); }
-    virtual std::list<TaskRef> getTasks() { throw std::exception(); }
-    virtual unsigned int getTaskCount() { throw std::exception(); }
 };
 
 #endif
