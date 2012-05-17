@@ -37,6 +37,7 @@ public:
     ~ThreadPoolTaskQueue();
     
     void addTask(TaskRef task);
+    void addTaskGroup(TaskGroup *group);
     
 };
 

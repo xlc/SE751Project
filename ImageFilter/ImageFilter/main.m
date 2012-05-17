@@ -36,9 +36,7 @@ int main(int argc, char *argv[])
         AppDelegate *app = [[AppDelegate alloc] init];
         
         long threadpoolSize = [defaults integerForKey:@"tp"];
-        if (threadpoolSize == 0) {
-            threadpoolSize = sysconf(_SC_NPROCESSORS_ONLN);
-        }
+        [app setThreadpoolSize:threadpoolSize];
         NSInteger priority = [defaults integerForKey:@"p"];
         switch (priority) {
             case 0:

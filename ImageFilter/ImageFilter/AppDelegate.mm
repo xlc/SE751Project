@@ -83,6 +83,10 @@ static TaskQueue *taskQueues[4];
 {
     [_drawer open];
     
+    if (_threadpoolSize == 0) {
+        _threadpoolSize = sysconf(_SC_NPROCESSORS_ONLN);
+    }
+    
     // create task queues
     taskQueues[0] = new GCDTaskQueue(_GCDPriority);
     taskQueues[1] = new ThreadPoolTaskQueue(_threadpoolSize);

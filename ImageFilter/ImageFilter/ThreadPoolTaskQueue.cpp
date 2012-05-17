@@ -34,8 +34,19 @@ void ThreadPoolTaskQueue::addTask(TaskRef task) {
         LockGuard lk(_mutex);
         _tasks.push_back(task);
         _action = NewTask;
-        _cv.notify_all();
+        _cv.notify_one();
     }
+}
+
+void ThreadPoolTaskQueue::addTaskGroup(TaskGroup *group) {
+    const std::vector<TaskRef> &tasks = group->getTasks();
+    LockGuard lk(_mutex);
+    std::vector<TaskRef>::const_iterator it;
+    for (it = tasks.begin(); it != tasks.end(); it++) {
+        _tasks.push_back(*it);
+    }
+    _action = NewTask;
+    _cv.notify_all();
 }
 
 void worker_thread(ThreadPoolTaskQueue *queue) {

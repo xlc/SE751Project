@@ -89,8 +89,6 @@ protected:
         }
     }
     
-    const std::vector<TaskRef> & getTasks() const { return _tasks; }
-    
     friend Task;
     friend TaskQueue;
     
@@ -102,6 +100,8 @@ public:
         task->setGroup(this);
         _tasks.push_back(task);
     }
+    
+    const std::vector<TaskRef> & getTasks() const { return _tasks; }
     
     void setCompletionHandler(TaskCompletionHandler handler);
     
