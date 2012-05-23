@@ -34,4 +34,6 @@
 - (BOOL)loadImage:(NSString *)imagePath;
 - (BOOL)applyFilter:(NSString *)filterName;
 
+- (void)startNonComputationalTaskWithSleepTime:(NSTimeInterval)time taskCount:(NSInteger)count;
+
 @end

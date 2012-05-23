@@ -19,16 +19,20 @@
  * g/granularity:   level of granularity / how many task should be created
  *                  number from 1 - 9, 1 means a task per pixel, 9 means only one task
  * ts/tasks:        control how many tasks, override granularity
- *                  tasks = 2 ^ ts
+ *                  for filter, tasks = 2 ^ ts
+ *                  for non-computational task, tasks = ts
  * t/taskqueue:     name of taskqueue should used, default GCDTaskQueue
  * tp/threadpool size: size of thread pool queue
  * p/GCD priority:  priority of GCD task queue, 1 - background, 2 - default, 3 - high
+ *
+ * nc/non-computational task: perform non-computational task and measure the perforamnce
+ * st/sleep time:   sleep time for non-computational task
  */
 int main(int argc, char *argv[])
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-//    NSLog(@"%@", [defaults volatileDomainForName:NSArgumentDomain]);
+    //    NSLog(@"%@", [defaults volatileDomainForName:NSArgumentDomain]);
     
     BOOL no_gui = [defaults boolForKey:@"n"];
     if (no_gui) {
@@ -61,40 +65,42 @@ int main(int argc, char *argv[])
         NSString *taskQueue = [defaults stringForKey:@"t"];
         [app setTaskQueue:taskQueue];    // set task queue
         
-        NSString *input = [defaults stringForKey:@"i"];     // set input image
-        if ([app loadImage:input]) {
-            
-            NSInteger granularity = [defaults integerForKey:@"g"];
-            [app setGranularity:granularity];    // set granularity
-            if ([defaults objectForKey:@"ts"] != nil) {
-                NSInteger count = [defaults integerForKey:@"ts"];
-                count = 1 << count; // pow(2, count);
-                [app setTaskCount:count];
-            }
-            NSString *filterName = [defaults stringForKey:@"f"];
-            
-            NSTimeInterval d = [defaults integerForKey:@"d"];
-            if (d != 0) {
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:d];
-                [NSThread sleepUntilDate:date];
-            }
+        NSInteger granularity = [defaults integerForKey:@"g"];
+        [app setGranularity:granularity];    // set granularity
+        NSInteger taskcount = 0;
+        if ([defaults objectForKey:@"ts"] != nil) {
+            taskcount = [defaults integerForKey:@"ts"];
+            taskcount = 1 << taskcount; // pow(2, count);
+            [app setTaskCount:taskcount];
+        }
+        
+        if ([defaults boolForKey:@"nc"]) {
+            double sleeptime = [defaults doubleForKey:@"st"];
+            [app startNonComputationalTaskWithSleepTime:sleeptime taskCount:[defaults integerForKey:@"ts"]];
+            [[NSRunLoop currentRunLoop] run];   // run and wait until finished
+        } else {
+            NSString *input = [defaults stringForKey:@"i"];     // set input image
+            if ([app loadImage:input]) {
                 
-            
-            if ([app applyFilter:filterName]) { // apply filter
+                NSString *filterName = [defaults stringForKey:@"f"];
                 
-//                printf("Image: %s\n", [input UTF8String]);
-//                printf("TaskQueue: %s\n", [taskQueue UTF8String]);
-//                printf("Granularity: %d\n", granularity);
-//                printf("Filter: %s\n", [filterName UTF8String]);
+                NSTimeInterval d = [defaults integerForKey:@"d"];
+                if (d != 0) {
+                    NSDate *date = [NSDate dateWithTimeIntervalSince1970:d];
+                    [NSThread sleepUntilDate:date];
+                }
                 
-                [[NSRunLoop currentRunLoop] run];   // run and wait until finished
+                if ([app applyFilter:filterName]) { // apply filter8
+                    
+                    [[NSRunLoop currentRunLoop] run];   // run and wait until finished
+                    
+                } else {
+                    fprintf(stderr, "invalid filter name: '%s'\n", [filterName UTF8String]);
+                }
                 
             } else {
-                fprintf(stderr, "invalid filter name: '%s'\n", [filterName UTF8String]);
+                fprintf(stderr, "invalid input path: '%s'\n", [input UTF8String]);
             }
-            
-        } else {
-            fprintf(stderr, "invalid input path: '%s'\n", [input UTF8String]);
         }
         
         return 0;

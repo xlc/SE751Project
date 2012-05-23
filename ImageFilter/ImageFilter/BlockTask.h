@@ -19,7 +19,12 @@ class BlockTask : public Task {
 public:
     
     BlockTask(void(^block)(void)) {
-        _block = Block_copy(block);
+#if __has_feature(objc_arc)
+        _block = block;
+#else
+        _block = Block_copy(block);  
+#endif
+        
     }
     
     ~BlockTask() {

@@ -26,6 +26,8 @@
 #import "Image.h"
 #import "CIEdgeFilter.h"
 
+#import "BlockTask.h"
+
 static TaskQueue *taskQueues[4];
 
 @interface AppDelegate ()
@@ -283,6 +285,28 @@ static TaskQueue *taskQueues[4];
 
     self.filter->apply();
     return YES;
+}
+
+#pragma mark -
+
+- (void)startNonComputationalTaskWithSleepTime:(NSTimeInterval)time taskCount:(NSInteger)count {
+    TaskGroup *group = new TaskGroup();
+    group->setCompletionHandler(^{
+        delete group;
+        
+        stop_time();
+        double dt = get_time_diff();
+        printf("%.4lf\n", dt);
+        exit(0);    // end
+    });
+    for (int i = 0; i < count; i++) {
+        TaskRef task(new BlockTask(^{
+            [NSThread sleepForTimeInterval:time]; 
+        }));
+        group->addTask(task);
+    }
+    init_time();
+    _taskQueue->addTaskGroup(group);
 }
 
 @end
