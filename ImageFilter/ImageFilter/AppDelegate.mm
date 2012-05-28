@@ -181,7 +181,7 @@ static TaskQueue *taskQueues[4];
         _taskQueue = taskQueues[0];
     } else if ([taskQueueName isEqualToString:@"ThreadPoolTaskQueue"]) {
         _taskQueue = taskQueues[1];
-    } else if ([taskQueueName isEqualToString:@"SequentialTaskQueue"]) {
+    } else if ([taskQueueName isEqualToString:@"SingleThreadTaskQueue"]) {
         _taskQueue = taskQueues[2];
     } else if ([taskQueueName isEqualToString:@"ThreadPerTaskQueue"]) {
         _taskQueue = taskQueues[3];
