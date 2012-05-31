@@ -98,6 +98,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0667A15915777125007BF5FF /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				0667A14615776FBB007BF5FF /* process-2.sh */,
+				0667A14715776FBB007BF5FF /* process.sh */,
+				0667A14915776FBB007BF5FF /* sleep-2.sh */,
+				0667A14A15776FBB007BF5FF /* sleep.sh */,
+				0667A14B15776FBB007BF5FF /* task-2.sh */,
+				0667A14C15776FBB007BF5FF /* task.sh */,
+				0667A14D15776FBB007BF5FF /* time-2.sh */,
+				0667A14E15776FBB007BF5FF /* time.sh */,
+			);
+			name = scripts;
+			sourceTree = "<group>";
+		};
 		0691C8DB151AEE7F00450DEB = {
 			isa = PBXGroup;
 			children = (
@@ -138,14 +153,7 @@
 		0691C8F0151AEE7F00450DEB /* ImageFilter */ = {
 			isa = PBXGroup;
 			children = (
-				0667A14615776FBB007BF5FF /* process-2.sh */,
-				0667A14715776FBB007BF5FF /* process.sh */,
-				0667A14915776FBB007BF5FF /* sleep-2.sh */,
-				0667A14A15776FBB007BF5FF /* sleep.sh */,
-				0667A14B15776FBB007BF5FF /* task-2.sh */,
-				0667A14C15776FBB007BF5FF /* task.sh */,
-				0667A14D15776FBB007BF5FF /* time-2.sh */,
-				0667A14E15776FBB007BF5FF /* time.sh */,
+				0667A15915777125007BF5FF /* scripts */,
 				06DC28F2151B0458006B8C8E /* TaskQueue */,
 				06DC28F1151B0448006B8C8E /* Filters */,
 				06D2E19B15399B3900D2BC7F /* CoreImage */,
