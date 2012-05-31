@@ -3,6 +3,8 @@ SOFTENG 751 High Performance Computing Project
 ImageFilter - A benchmarking tool for GCD and other threading approaches
 =======
 
+###[Github page](https://github.com/xlc/SE751Project)
+
 ------------
 
 Author:
