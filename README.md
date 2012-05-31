@@ -24,7 +24,7 @@ Grand Central Dispatch (GCD) is a runtime library created by Apple that supports
 
 The application is shown below:
 
-![ImageFilter interface](img/gui.png)
+![ImageFilter interface](https://github.com/xlc/SE751Project/raw/master/img/gui.png)
 
 Breakdown of how to use the application GUI:
  * Settings:
@@ -33,7 +33,7 @@ Breakdown of how to use the application GUI:
 
 Results and Discussion
 ---------###Performance
-The application was run on an iMac quad core 2.7GHz desktop.Firstly we ran the application with different task granularities on a large image, 2560 x 1600 pixels, using the blur filter (course-grained) and graphed the results below.From this we can see that GCD and Thread Pool approaches performed better than both sequential and single thread worker approaches when the number of tasks was smaller than 128,000. This is because as the number of tasks remains below 128,000 the tasks are computationally intensive enough to benefit from parallelism. The increases in time of the single thread approach shows the increase in computation overhead. As the number of tasks increase, the overhead of creating tasks also increase and eventually, the overhead is greater than the benefits of parallelizing the computation and sequential is faster. Note: as total size of the image is the same, as the number of task increases, computation of task decreases.![Performance between different task queues](img/performance.png)
+The application was run on an iMac quad core 2.7GHz desktop.Firstly we ran the application with different task granularities on a large image, 2560 x 1600 pixels, using the blur filter (course-grained) and graphed the results below.From this we can see that GCD and Thread Pool approaches performed better than both sequential and single thread worker approaches when the number of tasks was smaller than 128,000. This is because as the number of tasks remains below 128,000 the tasks are computationally intensive enough to benefit from parallelism. The increases in time of the single thread approach shows the increase in computation overhead. As the number of tasks increase, the overhead of creating tasks also increase and eventually, the overhead is greater than the benefits of parallelizing the computation and sequential is faster. Note: as total size of the image is the same, as the number of task increases, computation of task decreases.![Performance between different task queues](https://github.com/xlc/SE751Project/raw/master/img/performance.png)
 
 GCD and Thread Pool implementation results were very similar. This is because GCD is based on a thread pool implementation under the hood. We decided to investigate into this further by changing the number of threads created in the thread pool and by changing the nature of the tasks (computationally intensive vs interactive tasks).
 
@@ -42,7 +42,7 @@ GCD and Thread Pool implementation results were very similar. This is because GC
 
 We measured the ease of use by the number of lines of code, excluding comments, which were required to code up each of the multithreading approaches. This is shown in the graph below:
 
-![Lines of code to implement each task queues](img/ease.png)
+![Lines of code to implement each task queues](https://github.com/xlc/SE751Project/raw/master/img/ease.png)
 
 
 -----------
