@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    margin: 10px 13px 10px 13px;
+}
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+@media screen and (min-width: 768px) {
+    body {
+        width: 748px;
+        margin:10px auto;
+    }
+}
+</style>
+<title>README.html</title>
+</head>
+<body>
+<p>SOFTENG 751 High Performance Computing Project</p>
+
+<h1>ImageFilter &ndash; A benchmarking tool for GCD and other threading approaches</h1>
+
+<hr />
+
+<h2>Author:</h2>
+
+<ul>
+<li>Xiliang Chen &ndash; xche185</li>
+<li>Alice Wang &ndash; ywan478</li>
+</ul>
+
+
+<hr />
+
+<h2>Introduction</h2>
+
+<p>Grand Central Dispatch (GCD) is a runtime library created by Apple that supports multithreaded programming. It works by managing threads at the operating system level rather than the user application level. Code to be run in parallel are defined in “blocks”, and placed on different queues that are provided. Tasks in the queue are then scheduled for execution by the operating system, thus abstracting away code required to multithread the application.</p>
+
+<p>Our project is to investigate GCD in terms of performance and programmer ease of use and compare results with other traditional multithreading approaches. We created an image processing application using the following multithreading approaches:</p>
+
+<ul>
+<li>GCD</li>
+<li>Single thread</li>
+<li>Thread pool</li>
+<li>Thread per task</li>
+</ul>
+
+
+<p>The application is shown below:</p>
+
+<p><img src="img/gui.png" alt="ImageFilter interface" /></p>
+
+<p>Breakdown of how to use the application GUI:</p>
+
+<ul>
+<li><p>Settings:</p>
+
+<ul>
+<li>Task Queue – the selected multithreading approach</li>
+<li>Granularity – number of pixels to be processed in a task</li>
+</ul>
+</li>
+<li><p>Filters:</p>
+
+<ul>
+<li>Clicking a filter will apply the filter on the image</li>
+<li>Fine grain – Grey scale, Colourful, Invert, Sepia</li>
+<li>Course grain – Edge, Blur</li>
+<li>GPU Filter uses the GPU to process the image.</li>
+</ul>
+</li>
+</ul>
+
+
+<hr />
+
+<h2>Results and Discussion</h2>
+
+<h3>Performance</h3>
+
+<p>The application was run on an iMac quad core 2.7GHz desktop.</p>
+
+<p>Firstly we ran the application with different task granularities on a large image, 2560 x 1600 pixels, using the blur filter (course-grained) and graphed the results below.
+From this we can see that GCD and Thread Pool approaches performed better than both sequential and single thread worker approaches when the number of tasks was smaller than 128,000. This is because as the number of tasks remains below 128,000 the tasks are computationally intensive enough to benefit from parallelism. The increases in time of the single thread approach shows the increase in computation overhead. As the number of tasks increase, the overhead of creating tasks also increase and eventually, the overhead is greater than the benefits of parallelizing the computation and sequential is faster.</p>
+
+<p>Note: as total size of the image is the same, as the number of task increases, computation of task decreases.</p>
+
+<p><img src="img/performance.png" alt="Performance between different task queues" /></p>
+
+<p>GCD and Thread Pool implementation results were very similar. This is because GCD is based on a thread pool implementation under the hood. We decided to investigate into this further by changing the number of threads created in the thread pool and by changing the nature of the tasks (computationally intensive vs interactive tasks).</p>
+
+<h3>Ease of use</h3>
+
+<p>We measured the ease of use by the number of lines of code, excluding comments, which were required to code up each of the multithreading approaches. This is shown in the graph below:</p>
+
+<p><img src="img/ease.png" alt="Lines of code to implement each task queues" /></p>
+
+<hr />
+
+<h2>Conclusions</h2>
+
+<p>GCD is yet another way of developing multithreaded applications that runs on the Mac operating system. It works by dynamically balancing the workload by creating the appropriate amount of threads required. The performance is generally no worse than traditional multithreaded approaches when dealing with varying number of tasks, granularity of tasks, nature of tasks and performs only slightly worse than the best optimized multithreaded approach for each scenario. Despite the performance power and functionality of GCD, it is very easy to use and require the least amount of code to use. In terms of amount of effort vs performance, GCD is definitely the better approach for developers coding applications for the Mac.</p>
+</body>
+</html>
