@@ -9,7 +9,14 @@
 /* Begin PBXBuildFile section */
 		00DC9332152C37D70091C7AD /* ThreadPerTaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00DC9331152C37D70091C7AD /* ThreadPerTaskQueue.cpp */; };
 		0615161B151B116300E585C8 /* GCDTaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0615161A151B116300E585C8 /* GCDTaskQueue.cpp */; };
-		0684816F152AF80800713416 /* script.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0684816E152AF80800713416 /* script.sh */; };
+		0667A14F15776FBB007BF5FF /* process-2.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0667A14615776FBB007BF5FF /* process-2.sh */; };
+		0667A15015776FBB007BF5FF /* process.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0667A14715776FBB007BF5FF /* process.sh */; };
+		0667A15215776FBB007BF5FF /* sleep-2.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0667A14915776FBB007BF5FF /* sleep-2.sh */; };
+		0667A15315776FBB007BF5FF /* sleep.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0667A14A15776FBB007BF5FF /* sleep.sh */; };
+		0667A15415776FBB007BF5FF /* task-2.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0667A14B15776FBB007BF5FF /* task-2.sh */; };
+		0667A15515776FBB007BF5FF /* task.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0667A14C15776FBB007BF5FF /* task.sh */; };
+		0667A15615776FBB007BF5FF /* time-2.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0667A14D15776FBB007BF5FF /* time-2.sh */; };
+		0667A15715776FBB007BF5FF /* time.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0667A14E15776FBB007BF5FF /* time.sh */; };
 		0691C8EB151AEE7F00450DEB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0691C8EA151AEE7F00450DEB /* Cocoa.framework */; };
 		0691C8F5151AEE7F00450DEB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0691C8F3151AEE7F00450DEB /* InfoPlist.strings */; };
 		0691C8F7151AEE7F00450DEB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0691C8F6151AEE7F00450DEB /* main.m */; };
@@ -38,7 +45,14 @@
 		061E24711529B403000E9FD4 /* EdgeFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EdgeFilter.h; sourceTree = "<group>"; };
 		061E24731529BC39000E9FD4 /* BlurFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlurFilter.h; sourceTree = "<group>"; };
 		064BC42215245103000697A5 /* ColorfulFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorfulFilter.h; sourceTree = "<group>"; };
-		0684816E152AF80800713416 /* script.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = script.sh; sourceTree = "<group>"; };
+		0667A14615776FBB007BF5FF /* process-2.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "process-2.sh"; sourceTree = "<group>"; };
+		0667A14715776FBB007BF5FF /* process.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = process.sh; sourceTree = "<group>"; };
+		0667A14915776FBB007BF5FF /* sleep-2.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "sleep-2.sh"; sourceTree = "<group>"; };
+		0667A14A15776FBB007BF5FF /* sleep.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = sleep.sh; sourceTree = "<group>"; };
+		0667A14B15776FBB007BF5FF /* task-2.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "task-2.sh"; sourceTree = "<group>"; };
+		0667A14C15776FBB007BF5FF /* task.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = task.sh; sourceTree = "<group>"; };
+		0667A14D15776FBB007BF5FF /* time-2.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "time-2.sh"; sourceTree = "<group>"; };
+		0667A14E15776FBB007BF5FF /* time.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = time.sh; sourceTree = "<group>"; };
 		0691C8E6151AEE7F00450DEB /* ImageFilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0691C8EA151AEE7F00450DEB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		0691C8ED151AEE7F00450DEB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -124,7 +138,14 @@
 		0691C8F0151AEE7F00450DEB /* ImageFilter */ = {
 			isa = PBXGroup;
 			children = (
-				0684816E152AF80800713416 /* script.sh */,
+				0667A14615776FBB007BF5FF /* process-2.sh */,
+				0667A14715776FBB007BF5FF /* process.sh */,
+				0667A14915776FBB007BF5FF /* sleep-2.sh */,
+				0667A14A15776FBB007BF5FF /* sleep.sh */,
+				0667A14B15776FBB007BF5FF /* task-2.sh */,
+				0667A14C15776FBB007BF5FF /* task.sh */,
+				0667A14D15776FBB007BF5FF /* time-2.sh */,
+				0667A14E15776FBB007BF5FF /* time.sh */,
 				06DC28F2151B0458006B8C8E /* TaskQueue */,
 				06DC28F1151B0448006B8C8E /* Filters */,
 				06D2E19B15399B3900D2BC7F /* CoreImage */,
@@ -257,8 +278,15 @@
 				0691C8F5151AEE7F00450DEB /* InfoPlist.strings in Resources */,
 				0691C8FB151AEE7F00450DEB /* Credits.rtf in Resources */,
 				0691C901151AEE7F00450DEB /* MainMenu.xib in Resources */,
-				0684816F152AF80800713416 /* script.sh in Resources */,
 				06D2E19E15399B7900D2BC7F /* edge.cikernel in Resources */,
+				0667A14F15776FBB007BF5FF /* process-2.sh in Resources */,
+				0667A15015776FBB007BF5FF /* process.sh in Resources */,
+				0667A15215776FBB007BF5FF /* sleep-2.sh in Resources */,
+				0667A15315776FBB007BF5FF /* sleep.sh in Resources */,
+				0667A15415776FBB007BF5FF /* task-2.sh in Resources */,
+				0667A15515776FBB007BF5FF /* task.sh in Resources */,
+				0667A15615776FBB007BF5FF /* time-2.sh in Resources */,
+				0667A15715776FBB007BF5FF /* time.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
